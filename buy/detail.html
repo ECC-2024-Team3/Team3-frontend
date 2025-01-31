@@ -2,19 +2,21 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>오이: 오늘 거래는 이화에서</title>
+    <link rel="stylesheet" href="../assets/css/buy.css">
 </head>
 
 <body>
-    <header>
-        <img src="../assets/images/logo.png" alt="로고">
-        <nav>
-            <ul>
-                <li><a href="/buy">중고거래</a></li>
-                <li><a href="/free">무료나눔</a></li>
-                <li><a href="/lost">분실물 센터</a></li>
-                <li><a href="/mypage">마이페이지</a></li>
-            </ul>
+    <header class="header">
+        <div class="logo">
+            <img src="../assets/images/logo.png" alt="로고">
+        </div>
+        <nav class="nav">
+            <a href="/buy" class="nav-button">중고거래</a>
+            <a href="/free" class="nav-button">무료나눔</a>
+            <a href="/lost" class="nav-button">분실물 센터</a>
+            <a href="/mypage" class="mypage-button"></a>
         </nav>
     </header>
 
@@ -23,7 +25,7 @@
         <section class="product-detail">
 
             <div class="product-image">
-                <img src="" alt="상품 이미지">
+                <img src="..\assets\images\product_example.avif" alt="예시 상품 이미지">
             </div>
 
             <div class="product-info">
@@ -35,14 +37,14 @@
             </div>
 
             <div class="product-description">
-                <p>설명 | <p id=productDescription></p></p>
+                <p>설명 | <span id="productDescription"></span></p>
             </div>
 
         </section>
 
         <section class="seller-info">
 
-            <p>거래자 정보 | <p><span id="userName"></span></p></p>
+            <p>거래자 정보 | <span id="userName"></span></p>
 
         </section>
     </main>
