@@ -9,7 +9,7 @@ body {
 h2 {
     font-family: "Do Hyeon", "굴림";
     font-size: 72px;
-    color: #000000;
+    color: #00462A;
     margin: 0;
     line-height: 1.5;
     font-style: normal;
@@ -113,4 +113,39 @@ main {
     border-top: 5px solid #00462A;
     margin-top: 10px;
     width: 100%;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px;
+}
+
+.product-main {
+    display: flex;
+    gap: 20px;
+}
+
+.product-image img {
+    max-width: 500px;
+    height: auto;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.product-info h2 {
+    color: #000000;
+}
+
+.product-extra {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
 }
