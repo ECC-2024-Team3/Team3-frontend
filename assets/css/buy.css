@@ -5,13 +5,35 @@ body {
     font-size: 40px;
     color: #000000;
 }
-  
+
+h2 {
+    font-family: "Do Hyeon", "굴림";
+    font-size: 72px;
+    color: #000000;
+    margin: 0;
+    line-height: 1.5;
+    font-style: normal;
+    font-weight: 400;
+}
+
+h3 {
+    font-family: "Do Hyeon", "굴림";
+    font-size: 56px;
+    color: #000000;
+    margin: 0;
+    line-height: 1.4;
+    font-style: normal;
+    font-weight: 400;
+}
+
 .header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: fixed;
     z-index: 1000;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 128px;
     background-color: #00462A;
@@ -23,7 +45,7 @@ body {
 .logo img {
     height: 76px;
     flex-shrink: 0;
-    padding-left: 20px;
+    padding-left: 45px;
 }
 
 .nav {
@@ -34,8 +56,8 @@ body {
 
 header nav a {
     text-decoration: none;
-    color: #333;
-    font-weight: bold;
+    color: #00462A;
+    font-weight: normal;
 }
 
 .nav-button {
@@ -57,7 +79,7 @@ header nav a {
     border: none;
     cursor: pointer;
 
-    transform: translateX(-20px);
+    transform: translateX(-45px);
 }    
       
 .mypage-button {
@@ -69,6 +91,26 @@ header nav a {
     background-size: cover;
     cursor: pointer;
 
-    transform: translateX(-20px);
+    transform: translateX(-45px);
 }
 
+main {
+    margin-top: 128px;
+    margin-left: 60px;
+    margin-right: 60px;
+}
+
+.title {
+    display: flex;
+    align-items: baseline;
+    padding-top: 65px;
+    gap: 35px;
+}
+
+.title-line {
+    border: none;
+    align-items: center;
+    border-top: 5px solid #00462A;
+    margin-top: 10px;
+    width: 100%;
+}
