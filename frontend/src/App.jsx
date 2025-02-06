@@ -1,7 +1,11 @@
-import { Main } from "./components";
+import { Main, Login } from "./components";
 
 function App() {
-  return <Main />;
+  return (
+    <div>
+      <Main />
+    </div>
+  );
 }
 
 export default App;
