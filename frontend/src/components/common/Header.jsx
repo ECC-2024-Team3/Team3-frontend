@@ -7,7 +7,7 @@ export default function Header() {
       <header className="header">
         <S.Title>오이</S.Title>
         <div className="logo">
-          <img src=".\src\assets\images\logo.png" alt="로고" />
+          <img src=".\images\logo.png" alt="logo" />
         </div>
         <nav className="nav">
           <a href="/buy" className="nav-button">
