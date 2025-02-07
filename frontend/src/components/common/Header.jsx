@@ -3,21 +3,16 @@ import * as S from "./Header.style";
 
 export default function Header() {
   return (
-    <div>
-      <header className="header">
-        <S.Title>오이</S.Title>
-        <div className="logo">
-          <img src=".\images\logo.png" alt="logo" />
-        </div>
-        <nav className="nav">
-          <a href="/buy" className="nav-button">
-            중고거래
-          </a>
-          <a href="/mypage" className="mypage-button">
-            마이페이지
-          </a>
-        </nav>
-      </header>
-    </div>
+    <S.Header>
+      <S.Logo>
+        <img src=".\images\logo.png" alt="로고" />
+      </S.Logo>
+      <S.Nav>
+        <S.BuyButton href="/buy">중고거래</S.BuyButton>
+        <S.MypageButton href="/mypage">
+          <img src=".\images\button_mypage.png" alt="마이페이지" />
+        </S.MypageButton>
+      </S.Nav>
+    </S.Header>
   );
 }
