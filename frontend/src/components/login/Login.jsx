@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import cucumberpng from "./cucumber.png";
+import { useNavigate } from "react-router-dom";
+//import axios from "axios";
 
 //더미 데이터
 const User = {
@@ -10,6 +12,8 @@ const User = {
 export function Login() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
+
+  const navigate = useNavigate();
 
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
@@ -40,6 +44,7 @@ export function Login() {
     if (email === User.email && pw === User.pw) {
       //email, pw 체크
       alert("로그인에 성공했습니다.");
+      navigate("/main");
     } else {
       alert("이메일 또는 비밀번호를 확인해 주세요. ");
     }
