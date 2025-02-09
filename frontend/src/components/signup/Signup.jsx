@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import cucumberpng from "./cucumber.png";
 import { useNavigate } from "react-router-dom";
-//import axios from "axios";
 
 export function Signup() {
   const [email, setEmail] = useState("");
@@ -36,10 +35,7 @@ export function Signup() {
     }
   };
 
-  const onClickConfirmButton = () => {
-    alert("회원가입에 성공했습니다.");
-    navigate("/");
-  };
+  const onClickConfirmButton = () => {};
 
   return (
     <div className="page">
