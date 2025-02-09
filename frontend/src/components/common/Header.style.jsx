@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 export const Header = styled.header`
   display: flex;
@@ -22,10 +22,8 @@ export const Nav = styled.nav`
 
 export const BuyButton = styled.a`
   display: inline-block;
-  text-decoration: none;
   color: #00462A;
   font-size: 56px;
-  font-weight: 400;
   background-color: #FCFFEC;
   padding: 10px 20px;
   border-radius: 50px;
