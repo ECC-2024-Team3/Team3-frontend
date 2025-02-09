@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Main, Login } from "./components";
 import { createGlobalStyle } from "styled-components";
+import MyPage from "./components/mypage/MyPage";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/main" element={<Main />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </>
