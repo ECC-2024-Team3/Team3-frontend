@@ -1,12 +1,14 @@
 import React from "react";
 import * as S from "./Header.style";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import logopng from "./logo.png";
+import buttonmypagepng from "./button_mypage.png";
 
 export default function Header() {
   return (
     <S.Header>
       <S.Logo>
-        <img src=".\images\logo.png" alt="로고" />
+        <img src={logopng} alt="로고" />
       </S.Logo>
       <S.Nav>
         <Link to="/main">
@@ -14,7 +16,7 @@ export default function Header() {
         </Link>
         <Link to="/mypage">
           <S.MypageButton>
-            <img src=".\images\button_mypage.png" alt="마이페이지" />
+            <img src={buttonmypagepng} alt="마이페이지" />
           </S.MypageButton>
         </Link>
       </S.Nav>
