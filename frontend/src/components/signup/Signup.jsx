@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import cucumberpng from "./cucumber.png";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import axios from "axios";
 
 export function Signup() {
@@ -9,7 +9,7 @@ export function Signup() {
   const [pwcheck, setPwcheck] = useState("");
   const [name, setName] = useState("");
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [emailValid, setEmailValid] = useState(false);
   const [pwValid, setPwValid] = useState(false);
@@ -36,7 +36,10 @@ export function Signup() {
     }
   };
 
-  const onClickConfirmButton = () => {};
+  const onClickConfirmButton = () => {
+    alert("회원가입에 성공했습니다.");
+    navigate("/");
+  };
 
   return (
     <div className="page">
@@ -75,7 +78,7 @@ export function Signup() {
         <div className="errorMessageWrap">
           {!pwValid &&
             pw.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
-              <div>영문, 숫자, 특수문자 포함 8자 이상 입력해주세요.</div>
+              <div>8자 이상 입력해주세요.</div>
             )}
         </div>
 
@@ -91,8 +94,8 @@ export function Signup() {
 
         <div className="errorMessageWrap">
           {!pwValid &&
-            pw.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
-              <div>비밀번호를 확인해주세요.</div>
+            pwcheck.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
+              <div>비밀번호가 일치하지 않습니다.</div>
             )}
         </div>
 

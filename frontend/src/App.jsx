@@ -12,17 +12,15 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </BrowserRouter>
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
