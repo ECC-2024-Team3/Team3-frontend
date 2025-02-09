@@ -91,8 +91,8 @@ export function Signup() {
 
         <div className="errorMessageWrap">
           {!pwValid &&
-            pw.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
-              <div>비밀번호를 확인해주세요.</div>
+            pwcheck.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
+              <div>비밀번호가 일치하지 않습니다.</div>
             )}
         </div>
 
