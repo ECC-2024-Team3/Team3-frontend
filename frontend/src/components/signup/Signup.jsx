@@ -35,7 +35,10 @@ export function Signup() {
     }
   };
 
-  const onClickConfirmButton = () => {};
+  const onClickConfirmButton = () => {
+    alert("회원가입에 성공했습니다.");
+    navigate("/");
+  };
 
   return (
     <div className="page">
