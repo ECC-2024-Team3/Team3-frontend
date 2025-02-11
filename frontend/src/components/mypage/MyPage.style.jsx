@@ -13,12 +13,12 @@ export const Button = styled.a`
   display: block;
   height: 60px;
   width: 500px;
-  border: 5px #D1ED85 solid;
-
+  border: 3px solid #c4d7b2;
+  border-radius: 15px;
+  background-color: #e8f5e1;
   color: black;
   font-size: 32px;
   text-align: center;
   line-height: 60px;
-  border-radius: 30px;
   }
 `;

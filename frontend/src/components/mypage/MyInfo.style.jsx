@@ -24,9 +24,8 @@ export const Guide = styled.label`
 export const Input = styled.input`
   padding: 10px 30px;
   font-size: 20px;
-  border: 2px solid #c4d7b2;
+  border: 3px solid #00462a;
   border-radius: 10px;
-  background-color: #e8f5e1;
   margin-botton: 10px;
 `;
 
