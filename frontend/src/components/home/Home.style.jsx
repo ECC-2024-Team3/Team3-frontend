@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export const HomeContainer = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 500px;
+`;
+
 export const Logo = styled.div`
   display: flex;
   justify-content: center;
@@ -15,7 +23,7 @@ export const Nav = styled.div`
   gap: 10px;
 `;
 
-export const Button = styled.a`
+export const Button = styled.button`
   display: inline-block;
   padding: 10px 20px;
   border-radius: 5px;
@@ -26,22 +34,23 @@ export const Button = styled.a`
   width: 150px;
   text-align: center;
   transition: background 0.3s;
+  background-color: #00462a;
+  color: #fff;
 
   &:hover {
     opacity: 0.8;
   }
 `;
 
-export const SignupButton = styled(Button)`
-  background-color: #fff8f3;
-  color: black;
-`;
+export const SignupButton = styled(Button)``;
 
-export const LoginButton = styled(Button)`
-  background-color: #fff8f3;
-  color: black;
-`;
+export const LoginButton = styled(Button)``;
 
-export const GoButton = styled(Button)`
+export const GoButton = styled.p`
+  font-size: 15px;
   color: #857f7f;
+
+  &:hover {
+    opacity: 0.8;
+  }
 `;
