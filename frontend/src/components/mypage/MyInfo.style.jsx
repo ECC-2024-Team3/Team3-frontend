@@ -35,9 +35,8 @@ export const Pw = styled.label`
   margin-top: 10px;
 `;
 
-export const Button = styled.button`
+export const Button = styled.div`
   padding: 5px 15px;
-  font-family: 'Do Hyeon';
   font-size: 24px;
   color: white;
   background-color: #00462a;
