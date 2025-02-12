@@ -21,7 +21,7 @@ export const Nav = styled.nav`
   padding: 5px 0 0 0;
 `;
 
-export const BuyButton = styled.a`
+export const BuyButton = styled.div`
   display: inline-block;
   color: #00462A;
   font-size: 28px;
@@ -30,7 +30,7 @@ export const BuyButton = styled.a`
   border-radius: 50px;
 `;
 
-export const MypageButton = styled.a`
+export const MypageButton = styled.div`
   img {
     height: 45px;
   }
