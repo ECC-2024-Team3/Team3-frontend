@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./login.css";
 import cucumberpng from "./cucumber.png";
+import * as S from "../signup/Signup.style.jsx";
 
 // TODO: 실제 API 연동
 const User = {
@@ -32,41 +32,29 @@ export function Login() {
   };
 
   return (
-    <div className="page">
-      <img src={cucumberpng} alt="로고" className="logo" />
-      <div className="contentWrap">
-        <div className="inputTitle">이메일</div>
-        <div className="inputWrap">
-          <input
-            className="input"
+    <S.Page>
+      <S.Logo src={cucumberpng} alt="로고" />
+      <S.ContentWrap>
+        <S.InputTitle>이메일</S.InputTitle>
+        <S.InputWrap>
+          <S.Input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </div>
+        </S.InputWrap>
 
-        <div style={{ marginTop: "26px" }} className="inputTitle">
-          비밀번호
-        </div>
-        <div className="inputWrap">
-          <input
-            className="input"
+        <S.InputTitle style={{ marginTop: "26px" }}>비밀번호</S.InputTitle>
+        <S.InputWrap>
+          <S.Input
             type="password"
             value={pw}
             onChange={(e) => setPw(e.target.value)}
           />
-        </div>
+        </S.InputWrap>
 
-        <div>
-          <button
-            style={{ marginTop: "26px" }}
-            onClick={onClickConfirmButton} //function 호출
-            className="bottomButton"
-          >
-            로그인
-          </button>
-        </div>
-      </div>
-    </div>
+        <S.BottomButton onClick={onClickConfirmButton}>로그인</S.BottomButton>
+      </S.ContentWrap>
+    </S.Page>
   );
 }

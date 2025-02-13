@@ -9,6 +9,7 @@ import {
   MyPosts,
   MyInfo,
   LikePosts,
+  Register,
 } from "./components";
 import { createGlobalStyle } from "styled-components";
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/mypage/myposts" element={<MyPosts />} />
         <Route path="/mypage/likeposts" element={<LikePosts />} />
         <Route path="/mypage/mycomments" element={<MyComments />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
