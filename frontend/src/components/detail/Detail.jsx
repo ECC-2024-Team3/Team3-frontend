@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as S from "./MyInfo.style";
+import * as S from "./Detail.style";
 import Header from "../common/Header";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,7 @@ const User = {
   pw: "womansuni012!"
 };
 
-export default function MyInfo() {
+export default function Detail() {
   return (
     <div>
       <Header />
