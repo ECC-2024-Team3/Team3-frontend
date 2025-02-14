@@ -23,11 +23,13 @@ export function Main() {
       </S.SearchContainer>
       <S.ProductGrid>
         {items.map((item, index) => (
+          <Link to={"/post/1"} style={{ textDecoration: "none"}}>
           <S.ProductCard key={index}>
             <S.ProductImage />
             <S.ProductName>{item.name}</S.ProductName>
             <S.ProductPrice>{item.price}원</S.ProductPrice>
           </S.ProductCard>
+          </Link>
         ))}
       </S.ProductGrid>
     </S.Container>
