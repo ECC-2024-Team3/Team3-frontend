@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import cucumberpng from "./cucumber.png";
 import { useNavigate } from "react-router-dom";
+import "./signup.css";
 
 export function Signup() {
   const [email, setEmail] = useState("");

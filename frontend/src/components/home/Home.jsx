@@ -1,18 +1,22 @@
-import React from "react";
+import { Link } from "react-router-dom";
 import cucumberpng from "./cucumber.png";
 import * as S from "./Home.style";
 
 export function Home() {
   return (
-    <div>
+    <S.HomeContainer>
       <S.Logo>
         <img src={cucumberpng} alt="로고" className="logo" />
       </S.Logo>
       <S.Nav>
-        <S.SignupButton href="/signup">회원가입</S.SignupButton>
-        <S.LoginButton href="/login">로그인</S.LoginButton>
-        <S.GoButton href="/main">일단 둘러보기</S.GoButton>
+        <Link to="/signup">
+          <S.SignupButton>회원가입</S.SignupButton>
+        </Link>
+        <S.LoginButton>로그인</S.LoginButton>
+        <Link to="/main">
+          <S.GoButton>일단 둘러보기</S.GoButton>
+        </Link>
       </S.Nav>
-    </div>
+    </S.HomeContainer>
   );
 }

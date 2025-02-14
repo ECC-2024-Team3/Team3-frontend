@@ -1,17 +1,24 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Main, Home, Login, Signup } from "./components";
+import {
+  Main,
+  Home,
+  Login,
+  Signup,
+  MyComments,
+  MyPage,
+  MyPosts,
+  MyInfo,
+  LikePosts,
+} from "./components";
 import { createGlobalStyle } from "styled-components";
-import MyPage from "./components/mypage/MyPage";
-import MyInfo from "./components/mypage/MyInfo";
-import MyPosts from "./components/mypage/MyPosts";
-import LikePosts from "./components/mypage/LikePosts";
-import MyComments from "./components/mypage/MyComments";
 
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Do Hyeon', sans-serif;
+    font-size: 12px;
     font-weight: 400;
     text-decoration: none;
+    margin: 0;
   }
 `;
 
