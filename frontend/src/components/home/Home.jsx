@@ -12,7 +12,10 @@ export function Home() {
         <Link to="/signup">
           <S.SignupButton>회원가입</S.SignupButton>
         </Link>
-        <S.LoginButton>로그인</S.LoginButton>
+        <Link to="/login">
+          <S.LoginButton>로그인</S.LoginButton>
+        </Link>
+
         <Link to="/main">
           <S.GoButton>일단 둘러보기</S.GoButton>
         </Link>
