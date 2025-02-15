@@ -13,6 +13,9 @@ export default function Header() {
         </S.Logo>
       </Link>
       <S.Nav>
+        <Link to="/">
+          <S.BuyButton>로그인</S.BuyButton>
+        </Link>
         <Link to="/main">
           <S.BuyButton>중고거래</S.BuyButton>
         </Link>
