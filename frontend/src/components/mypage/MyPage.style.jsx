@@ -9,7 +9,7 @@ export const SelectMenu = styled.div`
   padding: 90px;
 `;
 
-export const Button = styled.a`
+export const Button = styled.div`
   display: block;
   height: 60px;
   width: 500px;

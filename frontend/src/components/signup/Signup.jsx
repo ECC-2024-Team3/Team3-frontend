@@ -1,7 +1,7 @@
 import { useState } from "react";
 import cucumberpng from "./cucumber.png";
 import { useNavigate } from "react-router-dom";
-import "./signup.css";
+import * as S from "./Signup.style.jsx";
 
 export function Signup() {
   const [email, setEmail] = useState("");
@@ -42,82 +42,52 @@ export function Signup() {
   };
 
   return (
-    <div className="page">
-      <img src={cucumberpng} alt="로고" className="logo" />
-      <div className="contentWrap">
-        <div style={{ marginTop: "100px" }} className="inputTitle">
-          이메일
-        </div>
-        <div className="inputWrap">
-          <input
-            className="input"
-            type="text"
-            value={email}
-            onChange={handleEmail} //function 호출
-          />
-        </div>
+    <S.Page>
+      <S.Logo src={cucumberpng} alt="로고" />
+      <S.ContentWrap>
+        <S.InputTitle marginTop="100px">이메일</S.InputTitle>
+        <S.InputWrap>
+          <S.Input type="text" value={email} onChange={handleEmail} />
+        </S.InputWrap>
+        <S.ErrorMessageWrap>
+          {!emailValid && email.length > 0 && (
+            <div>올바른 이메일을 입력해주세요.</div>
+          )}
+        </S.ErrorMessageWrap>
 
-        <div className="errorMessageWrap">
-          {!emailValid &&
-            email.length > 0 && ( //email을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
-              <div>올바른 이메일을 입력해주세요.</div>
-            )}
-        </div>
+        <S.InputTitle marginTop="26px">비밀번호</S.InputTitle>
+        <S.InputWrap>
+          <S.Input type="password" value={pw} onChange={handlePw} />
+        </S.InputWrap>
+        <S.ErrorMessageWrap>
+          {!pwValid && pw.length > 0 && <div>8자 이상 입력해주세요.</div>}
+        </S.ErrorMessageWrap>
 
-        <div style={{ marginTop: "26px" }} className="inputTitle">
-          비밀번호
-        </div>
-        <div className="inputWrap">
-          <input
-            className="input"
-            type="password"
-            value={pw}
-            onChange={handlePw} //function 호출
-          />
-        </div>
-        <div className="errorMessageWrap">
-          {!pwValid &&
-            pw.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
-              <div>8자 이상 입력해주세요.</div>
-            )}
-        </div>
-
-        <div className="inputTitle">비밀번호 확인</div>
-        <div className="inputWrap">
-          <input
-            className="input"
+        <S.InputTitle>비밀번호 확인</S.InputTitle>
+        <S.InputWrap>
+          <S.Input
             type="text"
             value={pwcheck}
             onChange={(e) => setPwcheck(e.target.value)}
           />
-        </div>
+        </S.InputWrap>
+        <S.ErrorMessageWrap>
+          {!pwValid && pwcheck.length > 0 && (
+            <div>비밀번호가 일치하지 않습니다.</div>
+          )}
+        </S.ErrorMessageWrap>
 
-        <div className="errorMessageWrap">
-          {!pwValid &&
-            pwcheck.length > 0 && ( //pw을 적었는데 valid하지 않을 때 경고 문구(두 조건 다 만족), 아무것도 적지 않으면 띄우지 않음
-              <div>비밀번호가 일치하지 않습니다.</div>
-            )}
-        </div>
-
-        <div className="inputTitle">이름</div>
-        <div className="inputWrap">
-          <input
-            className="input"
+        <S.InputTitle>이름</S.InputTitle>
+        <S.InputWrap>
+          <S.Input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-        </div>
+        </S.InputWrap>
 
-        <div style={{ marginTop: "26px" }}>
-          <button
-            onClick={onClickConfirmButton} //function 호출
-            className="bottomButton"
-          >
-            회원가입
-          </button>
-        </div>
-      </div>
-    </div>
+        <S.BottomButton onClick={onClickConfirmButton}>회원가입</S.BottomButton>
+      </S.ContentWrap>
+    </S.Page>
   );
 }
