@@ -23,6 +23,9 @@ export function MyPage() {
         <Link to="/" style={{ textDecorationLine: "none" }}>
           <S.Button>로그아웃</S.Button>
         </Link>
+        <Link to="/">
+          <S.Text>탈퇴하기</S.Text>
+        </Link>
       </S.SelectMenu>
     </div>
   );
