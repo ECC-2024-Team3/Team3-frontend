@@ -67,6 +67,7 @@ export function Main() {
         {/* currentItems 배열이 비어 있지 않으면 상품 목록을 출력 */}
         {currentItems.length > 0 ? (
           currentItems.map((item, index) => (
+            <Link to={"/post/1"} style={{ textDecoration: "none"}}>
             <S.ProductCard key={index}>
               {/* 상품 이미지 컴포넌트 */}
               <S.ProductImage />
@@ -77,6 +78,7 @@ export function Main() {
                 {Number(item.price.replace(/,/g, "")).toLocaleString()}원
               </S.ProductPrice>
             </S.ProductCard>
+            </Link>
           ))
         ) : (
           <S.NoResults>검색 결과가 없습니다.</S.NoResults>
