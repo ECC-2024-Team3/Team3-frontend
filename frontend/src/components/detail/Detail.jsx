@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import likedbuttonfillpng from "./liked_button_fill.png";
 import likedbuttonemptypng from "./liked_button_empty.png";
 import productexampleavif from "./product_example.avif";
+import bookmarkemptypng from "./bookmark_empty.png";
+import bookmarkedpng from "./bookmarked.png";
 
 export function Detail() {
   const { postId } = useParams();
@@ -13,6 +15,7 @@ export function Detail() {
     post_id: 1,
     title: "2019년형 불 들어오는 맥북 프로",
     location: "학생문화관",
+    status: "사용감 적음",
     price: 1200000,
     content: "사용감 좀 있어요! 잘 작동합니다!",
     transaction_status: "판매 중",
@@ -31,17 +34,23 @@ export function Detail() {
       <S.TitleContainer>
         <S.MainTitle>중고 거래 상세 페이지</S.MainTitle>
 
-        <S.LikeButton>
+        <S.ButtonContainer>
+        <S.Button>
           <img 
             src={product.liked ? likedbuttonfillpng : likedbuttonemptypng} 
             alt="like button"
-            style={{ width: "24px", height: "24px" }} 
+            style={{ width: "32px", height: "32px" }}
           />
-        </S.LikeButton>
+        </S.Button>
 
-        <S.BookmarkButton>
-          {product.bookmarked ? "checked" : "empty"}
-        </S.BookmarkButton>
+        <S.Button>
+          <img
+            src={product.bookmarked ? bookmarkedpng : bookmarkemptypng}
+            alt="bookmark_button"
+            style={{ width: "32px", height: "32px" }} 
+          />
+        </S.Button>
+        </S.ButtonContainer>
       </S.TitleContainer>
 
       <S.Line />
@@ -52,16 +61,20 @@ export function Detail() {
         <S.ProductDetails>
           <S.ProductTitle>{product.title}</S.ProductTitle>
           <S.InfoRow>
-            <S.InfoLabel>거래 상태</S.InfoLabel>
+            <S.InfoLabel>거래 상태 |</S.InfoLabel>
             <S.InfoValue>{product.transaction_status}</S.InfoValue>
           </S.InfoRow>
           <S.InfoRow>
-            <S.InfoLabel>거래 장소</S.InfoLabel>
+            <S.InfoLabel>거래 장소 |</S.InfoLabel>
             <S.InfoValue>{product.location}</S.InfoValue>
           </S.InfoRow>
           <S.InfoRow>
-            <S.InfoLabel>가격</S.InfoLabel>
-            <S.InfoValue>{product.price.toLocaleString()}원</S.InfoValue>
+            <S.InfoLabel>상품 상태 |</S.InfoLabel>
+            <S.InfoValue>{product.status}</S.InfoValue>
+          </S.InfoRow>
+          <S.InfoRow>
+            <S.InfoLabel>가격 |</S.InfoLabel>
+            <S.PriceValue>{product.price.toLocaleString()}원</S.PriceValue>
           </S.InfoRow>
         </S.ProductDetails>
       </S.ProductContainer>

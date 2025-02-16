@@ -10,7 +10,7 @@ import {
   MyInfo,
   LikePosts,
   Register,
-  Detail,
+  Detail
 } from "./components";
 import { createGlobalStyle } from "styled-components";
 
