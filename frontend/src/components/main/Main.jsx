@@ -11,22 +11,22 @@ export function Main() {
 
   //TODO: 상품 데이터 API 연결
   const items = [
-    { title: "새상품/폴로 ...", price: "16,800" },
-    { title: "사용감 없음/쿠션", price: "8,000" },
-    { title: "스타벅스 기프트카드", price: "10,000" },
-    { title: "새상품/자켓 ...", price: "20,000" },
-    { title: "새상품/폴로 ...", price: "16,800" },
-    { title: "사용감 없음/쿠션", price: "8,000" },
-    { title: "스타벅스 기프트카드", price: "10,000" },
-    { title: "새상품/자켓 ...", price: "20,000" },
-    { title: "새상품/폴로 ...", price: "16,800" },
-    { title: "사용감 없음/쿠션", price: "8,000" },
-    { title: "스타벅스 기프트카드", price: "10,000" },
-    { title: "아디다스", price: "20,000" },
-    { title: "폴로 ...", price: "16,800" },
-    { title: "사용감 없음/쿠션", price: "8,000" },
-    { title: "스타벅스 기프트카드", price: "10,000" },
-    { title: "새상품/자켓 ...", price: "20,000" },
+    { id: 1, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 2, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 3, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 4, title: "새상품/자켓 ...", price: "20,000" },
+    { id: 5, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 6, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 7, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 8, title: "새상품/자켓 ...", price: "20,000" },
+    { id: 9, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 10, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 11, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 12, title: "아디다스", price: "20,000" },
+    { id: 13, title: "폴로 ...", price: "16,800" },
+    { id: 14, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 15, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 16, title: "새상품/자켓 ...", price: "20,000" },
   ];
 
   // 검색 필터 적용
@@ -67,7 +67,7 @@ export function Main() {
         {/* currentItems 배열이 비어 있지 않으면 상품 목록을 출력 */}
         {currentItems.length > 0 ? (
           currentItems.map((item, index) => (
-            <Link to={"/post/1"} style={{ textDecoration: "none"}}>
+            <Link to={`/post/${item.id}`} style={{ textDecoration: "none"}}>
             <S.ProductCard key={index}>
               {/* 상품 이미지 컴포넌트 */}
               <S.ProductImage />

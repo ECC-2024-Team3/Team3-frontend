@@ -39,7 +39,7 @@ function App() {
         <Route path="/mypage/likeposts" element={<LikePosts />} />
         <Route path="/mypage/mycomments" element={<MyComments />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/post/1" element={<Detail />} />
+        <Route path="/post/:postId" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );
