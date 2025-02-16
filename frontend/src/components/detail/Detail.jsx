@@ -28,7 +28,7 @@ export function Detail() {
     { id: 15, title: "스타벅스 기프트카드", price: "10,000" },
     { id: 16, title: "새상품/자켓 ...", price: "20,000" },
   ];
-  
+
   const { postId } = useParams();
 
   const foundItem = items.find((item) => item.id === Number(postId));
@@ -44,7 +44,7 @@ export function Detail() {
     image: productexampleavif,
     likes_count: 15,
     bookmarks_count: 7,
-    liked: true,
+    liked: false,
     bookmarked: false,
     user_id: "ewha1886",
   });
