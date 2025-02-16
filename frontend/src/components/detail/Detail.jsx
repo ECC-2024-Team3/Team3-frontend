@@ -27,6 +27,23 @@ export function Detail() {
     user_id: "ewha1886",
   });
 
+  const handleLikeToggle = () => {
+    setProduct((prev) => ({
+      ...prev,
+      liked: !prev.liked,
+      likes_count: prev.liked ? prev.likes_count - 1 : prev.likes_count + 1,
+    }));
+  };
+
+
+  const handleBookmarkToggle = () => {
+    setProduct((prev) => ({
+      ...prev,
+      bookmarked: !prev.bookmarked,
+      bookmarks_count: prev.bookmarked ? prev.bookmarks_count - 1 : prev.bookmarks_count + 1,
+    }));
+  };
+
   return (
     <div>
       <Header />
@@ -35,7 +52,7 @@ export function Detail() {
         <S.MainTitle>중고 거래 상세 페이지</S.MainTitle>
 
         <S.ButtonContainer>
-        <S.Button>
+        <S.Button onClick={handleLikeToggle}>
           <img 
             src={product.liked ? likedbuttonfillpng : likedbuttonemptypng} 
             alt="like button"
@@ -43,7 +60,7 @@ export function Detail() {
           />
         </S.Button>
 
-        <S.Button>
+        <S.Button onClick={handleBookmarkToggle}>
           <img
             src={product.bookmarked ? bookmarkedpng : bookmarkemptypng}
             alt="bookmark_button"
