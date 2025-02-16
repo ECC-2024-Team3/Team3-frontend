@@ -61,7 +61,7 @@ export const ProductImage = styled.div`
   border-radius: 8px;
 `;
 
-export const ProductName = styled.p`
+export const ProductTitle = styled.p`
   margin-top: 8px;
   font-size: 14px;
   color: #333;
@@ -78,10 +78,43 @@ export const ProductPrice = styled.p`
 export const RegisterButton = styled.button`
   bottom: 24px;
   left: 24px;
-  background-color: #006d35;
+  background-color: #00462a;
   color: white;
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
+`;
+
+export const NoResults = styled.p`
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+  margin-top: 20px;
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+export const PageButton = styled.button`
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: none;
+  background-color: ${(props) => (props.active ? "#007bff" : "#ddd")};
+  color: ${(props) => (props.active ? "#fff" : "#000")};
+  cursor: pointer;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 `;

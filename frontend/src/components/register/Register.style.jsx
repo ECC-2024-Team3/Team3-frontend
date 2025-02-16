@@ -64,3 +64,17 @@ export const Button = styled.button`
     background-color: ${(props) => (props.primary ? "#003d21" : "#aaa")};
   }
 `;
+
+export const ImagePreviewContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+export const ImagePreview = styled.img`
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+`;
