@@ -22,3 +22,9 @@ export const Button = styled.div`
   line-height: 60px;
   }
 `;
+
+export const Text = styled.div`
+  color: gray;
+  font-size: 20px;
+  text-decoration: underline;
+`
