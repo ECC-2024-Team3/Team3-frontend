@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Header from "../common/Header";
 import * as S from "./Register.style";
-import { Link } from "react-router-dom";
-//import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function Register() {
+  const navigate = useNavigate();
+
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -22,33 +24,33 @@ export function Register() {
     setImages(imageUrls);
   };
 
-  /*const postData = {
-    title: "2019년형 불 들어오는 맥북 프로",
-    location: "학생문화관",
-    price: 1200000,
-    transaction_status: "판매 중",
-    content: "사용감 좀 있어요! 잘 작동합니다!",
-    images: [
-      "https://s3.amazonaws.com/bucket-name/image1.jpg",
-      "https://s3.amazonaws.com/bucket-name/image2.jpg"
-    ]
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const postItem = async () => {
+    const postData = {
+      images,
+      title,
+      category,
+      condition,
+      content,
+      price: isFree ? 0 : price,
+      location,
+      transactionStatus: isFree ? "나눔" : transactionStatus,
+    };
+
     try {
-      const response = await axios.post('https://api.example.com/posts', postData);
-      
-      if (response.status === 201) {
-        console.log("게시글이 성공적으로 등록되었습니다.", response.data);
-      }
+      await axios.post(
+        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/",
+        postData
+      );
+      navigate("/Main");
     } catch (error) {
-      if (error.response) {
-        console.error("에러 발생:", error.response.data.message);
-      } else {
-        console.error("요청 실패:", error.message);
-      }
+      console.error(
+        "요청 실패:",
+        error.response?.data?.message || error.message
+      );
     }
-  };*/
+  };
 
   return (
     <S.Container>
@@ -108,14 +110,12 @@ export function Register() {
           <option>고장/파손 상품</option>
         </S.Select>
 
-        <S.Label
-          name="content"
+        <S.Label>설명</S.Label>
+        <S.TextArea
+          placeholder="상품 설명을 입력하세요"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        >
-          설명
-        </S.Label>
-        <S.TextArea placeholder="상품 설명을 입력하세요"></S.TextArea>
+        ></S.TextArea>
 
         <S.Label>가격 (원)</S.Label>
         <S.CheckboxContainer>
@@ -138,7 +138,7 @@ export function Register() {
 
         <S.Label>거래 장소</S.Label>
         <S.Input
-          type="location"
+          type="text"
           value={location}
           placeholder="거래 장소를 입력하세요"
           onChange={(e) => setLocation(e.target.value)}
@@ -160,10 +160,9 @@ export function Register() {
           <Link to="/Main">
             <S.Button>돌아가기</S.Button>
           </Link>
-
-          <Link to="/Main">
-            <S.Button primary>등록</S.Button>
-          </Link>
+          <S.Button primary onClick={handleSubmit}>
+            등록
+          </S.Button>
         </S.ButtonContainer>
       </S.Form>
     </S.Container>

@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cucumberpng from "./cucumber.png";
 import * as S from "../signup/Signup.style.jsx";
+import axios from "axios";
 
 // TODO: 실제 API 연동
-const User = {
-  email: "ewha1886@naver.com",
-  pw: "womansuni012!",
-};
+//const User = {
+//  email: "ewha1886@naver.com",
+//  pw: "womansuni012!",
+//};
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -15,19 +16,35 @@ export function Login() {
 
   const navigate = useNavigate();
 
-  const onClickConfirmButton = () => {
-    if (email !== User.email || pw !== User.pw) {
-      alert("이메일 또는 비밀번호를 확인해 주세요.");
-      return;
-    }
-
-    // TODO: 로그인 API 연동
-    const res = { status: 200, message: "로그인 성공" };
-    if (res.status === 200) {
-      alert(res.message);
+  const onClickConfirmButton = async () => {
+    try {
+      const response = await axios.post(
+        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/users/login",
+        { id: email, pw }
+      );
+      alert(response.data.message);
       navigate("/main");
-    } else {
-      alert(res.error);
+    } catch (error) {
+      if (error.response) {
+        const { status, error: errorMessage } = error.response.data;
+
+        if (status === 401) {
+          if (
+            errorMessage === "가입되지 않은 id입니다." ||
+            errorMessage === "틀린 password 입니다."
+          ) {
+            alert(errorMessage);
+          } else {
+            alert("인증 오류가 발생했습니다. 다시 시도해 주세요.");
+          }
+        } else if (status === 400) {
+          alert("올바르지 않은 형식입니다.");
+        } else {
+          alert("알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.");
+        }
+      } else {
+        alert("네트워크 오류가 발생했습니다. 다시 시도해 주세요.");
+      }
     }
   };
 

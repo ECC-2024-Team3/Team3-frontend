@@ -2,6 +2,7 @@ import { useState } from "react";
 import cucumberpng from "./cucumber.png";
 import { useNavigate } from "react-router-dom";
 import * as S from "./Signup.style.jsx";
+import axios from "axios";
 
 export function Signup() {
   const [email, setEmail] = useState("");
@@ -36,9 +37,38 @@ export function Signup() {
     }
   };
 
-  const onClickConfirmButton = () => {
-    alert("회원가입에 성공했습니다.");
-    navigate("/");
+  const handleSignup = async () => {
+    if (!emailValid || !pwValid || pw !== pwcheck) {
+      alert("입력한 정보를 다시 확인해주세요.");
+      return;
+    }
+
+    const requestData = {
+      id: name,
+      username: name,
+      email: email,
+      password1: pw,
+      password2: pwcheck,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/users/join",
+        requestData
+      );
+
+      if (response.status === 201) {
+        alert(response.data.success);
+        navigate("/");
+      } else {
+        alert(response.data.error || "회원가입에 실패했습니다.");
+      }
+    } catch (error) {
+      alert(
+        error.response?.data?.error ||
+          "서버 오류가 발생했습니다. 다시 시도해주세요."
+      );
+    }
   };
 
   return (
@@ -86,7 +116,7 @@ export function Signup() {
           />
         </S.InputWrap>
 
-        <S.BottomButton onClick={onClickConfirmButton}>회원가입</S.BottomButton>
+        <S.BottomButton onClick={handleSignup}>회원가입</S.BottomButton>
       </S.ContentWrap>
     </S.Page>
   );
