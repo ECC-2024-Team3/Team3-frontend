@@ -7,6 +7,7 @@ import likedbuttonemptypng from "./liked_button_empty.png";
 import productexampleavif from "./product_example.avif";
 import bookmarkemptypng from "./bookmark_empty.png";
 import bookmarkedpng from "./bookmarked.png";
+import { Comment } from "./Comment";
 
 export function Detail() {
 
@@ -127,6 +128,8 @@ export function Detail() {
         <S.InfoLabel>거래자 정보</S.InfoLabel>
         <S.SellerName>판매자 ID: {product.user_id}</S.SellerName>
       </S.SellerInfo>
+
+      <Comment />
     </div>
   );
 }
