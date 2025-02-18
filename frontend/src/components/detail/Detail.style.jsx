@@ -63,7 +63,7 @@ export const InfoRow = styled.div`
 
 export const InfoLabel = styled.div`
   width: 100px;
-  font-weight: bold;
+  font-weight: 400;
   color: #00462a;
 `;
 

@@ -7,25 +7,65 @@ import likedbuttonemptypng from "./liked_button_empty.png";
 import productexampleavif from "./product_example.avif";
 import bookmarkemptypng from "./bookmark_empty.png";
 import bookmarkedpng from "./bookmarked.png";
+import { Comment } from "./Comment";
 
 export function Detail() {
+
+  const items = [
+    { id: 1, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 2, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 3, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 4, title: "새상품/자켓 ...", price: "20,000" },
+    { id: 5, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 6, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 7, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 8, title: "새상품/자켓 ...", price: "20,000" },
+    { id: 9, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 10, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 11, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 12, title: "아디다스", price: "20,000" },
+    { id: 13, title: "폴로 ...", price: "16,800" },
+    { id: 14, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 15, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 16, title: "새상품/자켓 ...", price: "20,000" },
+  ];
+
   const { postId } = useParams();
 
+  const foundItem = items.find((item) => item.id === Number(postId));
+
   const [product, setProduct] = useState({
-    post_id: 1,
-    title: "2019년형 불 들어오는 맥북 프로",
+    post_id: foundItem.id,
+    title: foundItem.title,
     location: "학생문화관",
     status: "사용감 적음",
-    price: 1200000,
-    content: "사용감 좀 있어요! 잘 작동합니다!",
+    price: foundItem.price,
+    content: "거래 원하시는 분은 댓글 달아주세요!",
     transaction_status: "판매 중",
     image: productexampleavif,
     likes_count: 15,
     bookmarks_count: 7,
-    liked: true,
+    liked: false,
     bookmarked: false,
     user_id: "ewha1886",
   });
+
+  const handleLikeToggle = () => {
+    setProduct((prev) => ({
+      ...prev,
+      liked: !prev.liked,
+      likes_count: prev.liked ? prev.likes_count - 1 : prev.likes_count + 1,
+    }));
+  };
+
+
+  const handleBookmarkToggle = () => {
+    setProduct((prev) => ({
+      ...prev,
+      bookmarked: !prev.bookmarked,
+      bookmarks_count: prev.bookmarked ? prev.bookmarks_count - 1 : prev.bookmarks_count + 1,
+    }));
+  };
 
   return (
     <div>
@@ -35,7 +75,7 @@ export function Detail() {
         <S.MainTitle>중고 거래 상세 페이지</S.MainTitle>
 
         <S.ButtonContainer>
-        <S.Button>
+        <S.Button onClick={handleLikeToggle}>
           <img 
             src={product.liked ? likedbuttonfillpng : likedbuttonemptypng} 
             alt="like button"
@@ -43,7 +83,7 @@ export function Detail() {
           />
         </S.Button>
 
-        <S.Button>
+        <S.Button onClick={handleBookmarkToggle}>
           <img
             src={product.bookmarked ? bookmarkedpng : bookmarkemptypng}
             alt="bookmark_button"
@@ -88,6 +128,8 @@ export function Detail() {
         <S.InfoLabel>거래자 정보</S.InfoLabel>
         <S.SellerName>판매자 ID: {product.user_id}</S.SellerName>
       </S.SellerInfo>
+
+      <Comment />
     </div>
   );
 }
