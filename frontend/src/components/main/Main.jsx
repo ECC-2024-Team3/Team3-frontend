@@ -26,7 +26,7 @@ export function Main() {
 
         if (response.status === 200) {
           if (response.data.length > 0) {
-            setItems(response.data); // data 배열을 바로 저장
+            setItems(response.data);
           } else {
             setError("게시글이 없습니다.");
           }
@@ -101,10 +101,20 @@ export function Main() {
         {/* currentItems 배열이 비어 있지 않으면 상품 목록을 출력 */}
         {currentItems.length > 0 ? (
           currentItems.map((item) => (
-            <S.ProductCard key={item.postId}>
-              <S.ProductImage src={item.thumbnailImageUrl} alt="상품 이미지" />
-              <S.ProductPrice>{item.price.toLocaleString()}원</S.ProductPrice>
-            </S.ProductCard>
+            <Link
+              to={`/detail/${item.postId}`}
+              key={item.postId}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <S.ProductCard key={item.postId}>
+                <S.ProductImage
+                  src={item.thumbnailImageUrl}
+                  alt="상품 이미지"
+                />
+                <S.ProductTitle>{item.title}</S.ProductTitle>
+                <S.ProductPrice>{item.price.toLocaleString()}원</S.ProductPrice>
+              </S.ProductCard>{" "}
+            </Link>
           ))
         ) : (
           <S.NoResults>검색 결과가 없습니다.</S.NoResults>

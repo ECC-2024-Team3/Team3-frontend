@@ -19,7 +19,7 @@ export function Login() {
   const onClickConfirmButton = async () => {
     try {
       const response = await axios.post(
-        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/users/login",
+        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/login",
         { id: email, pw }
       );
       alert(response.data.message);
