@@ -12,6 +12,10 @@ export function Comment() {
 
   const [newComment, setNewComment] = useState("");
 
+  const [editingId, setEditingId] = useState(null);
+
+  const [editText, setEditText] = useState("");
+
   const handleAddComment = () => {
     if (newComment.trim() === "") return;
 
@@ -26,28 +30,87 @@ export function Comment() {
     setNewComment("");
   };
 
+  const handleDeleteComment = (id) => {
+    const confirmed = window.confirm("댓글을 삭제하시겠습니까?");
+    if (!confirmed) return;
+
+    setComments(comments.filter((comment) => comment.id !== id));
+  };
+
+  const handleEditComment = (comment) => {
+    setEditingId(comment.id);
+    setEditText(comment.text);
+  };
+
+  const handleSaveEdit = (id) => {
+    if (editText.trim() === "") {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+
+    setComments(
+      comments.map((c) =>
+        c.id === id ? { ...c, text: editText } : c
+      )
+    );
+    setEditingId(null);
+    setEditText("");
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+    setEditText("");
+  };
+
   return (
     <div>
+      <S.Line />
       <S.CommentContainer>
-      <S.CommentTitle>댓글</S.CommentTitle>
-      
-      <S.CommentList>
-        {comments.map((comment) => (
-          <S.CommentItem key={comment.id}>
-            <S.CommentAuthor>{comment.author}</S.CommentAuthor>
-            <S.CommentText>{comment.text}</S.CommentText>
-          </S.CommentItem>
-        ))}
-      </S.CommentList>
-      
-      <S.InputContainer>
-        <S.CommentInput
-          placeholder="댓글을 입력하세요..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <S.SubmitButton onClick={handleAddComment}>등록</S.SubmitButton>
-      </S.InputContainer>
+        <S.CommentTitle>댓글</S.CommentTitle>
+
+        <S.CommentList>
+          {comments.map((comment) => (
+            <S.CommentItem key={comment.id}>
+              {editingId === comment.id ? (
+                <S.EditContainer>
+                  <S.CommentAuthor>{comment.author}</S.CommentAuthor>
+                  <S.EditInput
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                  />
+                  <S.EditButton onClick={() => handleSaveEdit(comment.id)}>
+                    저장
+                  </S.EditButton>
+                  <S.CancelButton onClick={handleCancelEdit}>
+                    취소
+                  </S.CancelButton>
+                </S.EditContainer>
+              ) : (
+                <>
+                  <S.CommentAuthor>{comment.author}</S.CommentAuthor>
+                  <S.CommentText>{comment.text}</S.CommentText>
+                  <S.ButtonGroup>
+                    <S.SmallButton onClick={() => handleEditComment(comment)}>
+                      수정
+                    </S.SmallButton>
+                    <S.SmallButton onClick={() => handleDeleteComment(comment.id)}>
+                      삭제
+                    </S.SmallButton>
+                  </S.ButtonGroup>
+                </>
+              )}
+            </S.CommentItem>
+          ))}
+        </S.CommentList>
+
+        <S.InputContainer>
+          <S.CommentInput
+            placeholder="댓글을 입력하세요..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+          />
+          <S.SubmitButton onClick={handleAddComment}>등록</S.SubmitButton>
+        </S.InputContainer>
       </S.CommentContainer>
     </div>
   );
