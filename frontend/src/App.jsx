@@ -11,7 +11,7 @@ import {
   LikePosts,
   BookmarkedPosts,
   Register,
-  Detail
+  Detail,
 } from "./components";
 import { createGlobalStyle } from "styled-components";
 

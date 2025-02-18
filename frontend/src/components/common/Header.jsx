@@ -5,7 +5,6 @@ import logopng from "./logo.png";
 import buttonmypagepng from "./button_mypage.png";
 
 export default function Header() {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {

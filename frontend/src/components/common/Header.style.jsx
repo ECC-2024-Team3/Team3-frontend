@@ -4,7 +4,7 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #00462A;
+  background-color: #00462a;
   height: 60px;
   padding: 0 20px;
 `;
@@ -12,6 +12,10 @@ export const Header = styled.header`
 export const Logo = styled.div`
   img {
     height: 40px;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
   }
 `;
 
@@ -23,15 +27,24 @@ export const Nav = styled.nav`
 
 export const BuyButton = styled.div`
   display: inline-block;
-  color: #00462A;
+  color: #00462a;
   font-size: 28px;
-  background-color: #FCFFEC;
+  background-color: #fcffec;
   padding: 5px 10px;
   border-radius: 50px;
+
+  &:hover {
+    background-color: #00462a;
+    color: #fcffec;
+  }
 `;
 
 export const MypageButton = styled.div`
   img {
     height: 45px;
+  }
+
+  &:hover img {
+    transform: scale(1.1);
   }
 `;

@@ -10,7 +10,6 @@ import bookmarkedpng from "./bookmarked.png";
 import { Comment } from "./Comment";
 
 export function Detail() {
-
   const items = [
     { id: 1, title: "새상품/폴로 ...", price: "16,800" },
     { id: 2, title: "사용감 없음/쿠션", price: "8,000" },
@@ -31,6 +30,7 @@ export function Detail() {
   ];
 
   const { postId } = useParams();
+  console.log(postId);
 
   const foundItem = items.find((item) => item.id === Number(postId));
 
@@ -58,12 +58,13 @@ export function Detail() {
     }));
   };
 
-
   const handleBookmarkToggle = () => {
     setProduct((prev) => ({
       ...prev,
       bookmarked: !prev.bookmarked,
-      bookmarks_count: prev.bookmarked ? prev.bookmarks_count - 1 : prev.bookmarks_count + 1,
+      bookmarks_count: prev.bookmarked
+        ? prev.bookmarks_count - 1
+        : prev.bookmarks_count + 1,
     }));
   };
 
@@ -75,21 +76,21 @@ export function Detail() {
         <S.MainTitle>중고 거래 상세 페이지</S.MainTitle>
 
         <S.ButtonContainer>
-        <S.Button onClick={handleLikeToggle}>
-          <img 
-            src={product.liked ? likedbuttonfillpng : likedbuttonemptypng} 
-            alt="like button"
-            style={{ width: "32px", height: "32px" }}
-          />
-        </S.Button>
+          <S.Button onClick={handleLikeToggle}>
+            <img
+              src={product.liked ? likedbuttonfillpng : likedbuttonemptypng}
+              alt="like button"
+              style={{ width: "32px", height: "32px" }}
+            />
+          </S.Button>
 
-        <S.Button onClick={handleBookmarkToggle}>
-          <img
-            src={product.bookmarked ? bookmarkedpng : bookmarkemptypng}
-            alt="bookmark_button"
-            style={{ width: "32px", height: "32px" }} 
-          />
-        </S.Button>
+          <S.Button onClick={handleBookmarkToggle}>
+            <img
+              src={product.bookmarked ? bookmarkedpng : bookmarkemptypng}
+              alt="bookmark_button"
+              style={{ width: "32px", height: "32px" }}
+            />
+          </S.Button>
         </S.ButtonContainer>
       </S.TitleContainer>
 
