@@ -1,13 +1,47 @@
 import Header from "../common/Header";
 import * as S from "./Main.style";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const itemsPerPage = 8; // 한 페이지당 표시할 아이템 개수
 
 export function Main() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const response = await axios.get(
+          "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/boards/1/posts"
+        );
+
+        console.log(response.data);
+
+        if (response.status === 200) {
+          if (response.data.length > 0) {
+            setItems(response.data);
+          } else {
+            setError("게시글이 없습니다.");
+          }
+        } else {
+          setError("게시글 목록을 불러오는 데 실패했습니다.");
+        }
+      } catch (err) {
+        setError("게시판을 찾을 수 없습니다.");
+      }
+
+      setLoading(false);
+    };
+
+    fetchItems();
+  }, []);
 
   //TODO: 상품 데이터 API 연결
   const items = [
@@ -66,18 +100,20 @@ export function Main() {
       <S.ProductGrid>
         {/* currentItems 배열이 비어 있지 않으면 상품 목록을 출력 */}
         {currentItems.length > 0 ? (
-          currentItems.map((item, index) => (
-            <Link to={`/post/${item.id}`} style={{ textDecoration: "none"}}>
-            <S.ProductCard key={index}>
-              {/* 상품 이미지 컴포넌트 */}
-              <S.ProductImage />
-              {/* 상품 이름 표시 */}
-              <S.ProductTitle>{item.title}</S.ProductTitle>
-              {/* 상품 가격 표시 (천 단위 구분 기호 추가) */}
-              <S.ProductPrice>
-                {Number(item.price.replace(/,/g, "")).toLocaleString()}원
-              </S.ProductPrice>
-            </S.ProductCard>
+          currentItems.map((item) => (
+            <Link
+              to={`/detail/${item.postId}`}
+              key={item.postId}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <S.ProductCard key={item.postId}>
+                <S.ProductImage
+                  src={item.thumbnailImageUrl}
+                  alt="상품 이미지"
+                />
+                <S.ProductTitle>{item.title}</S.ProductTitle>
+                <S.ProductPrice>{item.price.toLocaleString()}원</S.ProductPrice>
+              </S.ProductCard>
             </Link>
           ))
         ) : (
