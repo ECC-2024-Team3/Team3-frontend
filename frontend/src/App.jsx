@@ -11,7 +11,7 @@ import {
   LikePosts,
   BookmarkedPosts,
   Register,
-  Detail
+  Detail,
 } from "./components";
 import { createGlobalStyle } from "styled-components";
 
@@ -41,7 +41,7 @@ function App() {
         <Route path="/mypage/bookmarkedposts" element={<BookmarkedPosts />} />
         <Route path="/mypage/mycomments" element={<MyComments />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/post/1" element={<Detail />} />
+        <Route path="/post/:postId" element={<Detail />} />
       </Routes>
     </BrowserRouter>
   );
