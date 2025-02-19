@@ -40,7 +40,7 @@ export function Register() {
 
     try {
       await axios.post(
-        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/",
+        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/boards/3/posts",
         postData
       );
       navigate("/Main");

@@ -19,7 +19,7 @@ export function Main() {
       setError("");
       try {
         const response = await axios.get(
-          "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/boards/1/posts"
+          "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/posts"
         );
 
         console.log(response.data);
