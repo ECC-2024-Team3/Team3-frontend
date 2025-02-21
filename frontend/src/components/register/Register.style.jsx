@@ -3,14 +3,21 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-color: #f8f8f8;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+  font-size: 16px;
 `;
 
 export const Title = styled.h2`
   color: #004d2b;
   margin-bottom: 20px;
+  font-size: 32px;
 `;
 
 export const Form = styled.form`
+  min-width: 500px;
   display: flex;
   flex-direction: column;
   gap: 15px;

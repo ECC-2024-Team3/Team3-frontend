@@ -20,5 +20,16 @@ export const Button = styled.div`
   font-size: 32px;
   text-align: center;
   line-height: 60px;
+
+  &:hover {
+    background-color: #c4d7b2;
+    color: white;
   }
+`;
+
+export const Text = styled.div`
+  color: gray;
+  font-size: 20px;
+  text-decoration: underline;
+  cursor: pointer;
 `;

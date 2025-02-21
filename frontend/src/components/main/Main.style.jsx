@@ -17,6 +17,7 @@ export const SearchContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 16px 0;
+  gap: 12px;
 `;
 
 export const SearchInput = styled.input`
@@ -29,13 +30,16 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchButton = styled.button`
-  margin-left: 8px;
   padding: 12px;
   background-color: #e5e7eb;
   border: none;
   border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
+
+  &:hover {
+    background-color: #919191;
+  }
 `;
 
 export const ProductGrid = styled.div`
@@ -52,9 +56,26 @@ export const ProductCard = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
+
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+    img {
+      transform: scale(1.2);
+      transition: transform 0.3s ease-in-out;
+    }
+  }
 `;
 
-export const ProductImage = styled.div`
+export const ImageContainer = styled.div`
+  overflow: hidden;
+  width: 100%;
+  height: 160px;
+  background-color: #d1d5db;
+  border-radius: 8px;
+`;
+
+export const ProductImage = styled.img`
   width: 100%;
   height: 160px;
   background-color: #d1d5db;
@@ -84,6 +105,12 @@ export const RegisterButton = styled.button`
   border-radius: 8px;
   font-size: 14px;
   cursor: pointer;
+  margin-left: 12px;
+
+  &:hover {
+    background-color: #00663d;
+    color: white;
+  }
 `;
 
 export const NoResults = styled.p`

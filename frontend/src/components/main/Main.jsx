@@ -1,47 +1,73 @@
 import Header from "../common/Header";
 import * as S from "./Main.style";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { API_URLS } from "../../consts";
+import { fetchApi } from "../../utils";
 
-const itemsPerPage = 8; // 한 페이지당 표시할 아이템 개수
+const ITEMS_PER_PAGE = 8; // 한 페이지당 표시할 아이템 개수
 
 export function Main() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [items, setItems] = useState([]);
 
-  //TODO: 상품 데이터 API 연결
-  const items = [
-    { id: 1, title: "새상품/폴로 ...", price: "16,800" },
-    { id: 2, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 3, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 4, title: "새상품/자켓 ...", price: "20,000" },
-    { id: 5, title: "새상품/폴로 ...", price: "16,800" },
-    { id: 6, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 7, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 8, title: "새상품/자켓 ...", price: "20,000" },
-    { id: 9, title: "새상품/폴로 ...", price: "16,800" },
-    { id: 10, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 11, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 12, title: "아디다스", price: "20,000" },
-    { id: 13, title: "폴로 ...", price: "16,800" },
-    { id: 14, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 15, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 16, title: "새상품/자켓 ...", price: "20,000" },
+  const fetchItems = async () => {
+    try {
+      const response = await fetchApi(API_URLS.posts, {
+        method: "GET",
+      });
+
+      if (response.status === 200) {
+        setItems(response?.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const data = [
+    {
+      postId: 1,
+      userId: 10,
+      title: "맥북 프로 16인치 판매합니다",
+      location: "이대역",
+      price: 1200000,
+      transactionStatus: "ON_SALE",
+      representativeImage: "https://picsum.photos/600/300",
+      createdAt: "2025-02-15T12:34:56",
+      updatedAt: "2025-02-15T12:34:56",
+    },
+    {
+      postId: 5,
+      userId: 20,
+      title: "갤럭시 S23 울트라 팝니다",
+      location: "학교 정문",
+      price: 800000,
+      transactionStatus: "RESERVED",
+      representativeImage: "https://picsum.photos/600/200",
+      createdAt: "2025-02-14T15:12:30",
+      updatedAt: "2025-02-14T15:12:30",
+    },
   ];
 
   // 검색 필터 적용
   const filteredItems = items.filter(
-    (item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())
+    (item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()),
     // item.title을 소문자로 변환하여 searchTerm을 소문자로 변환한 값이 포함되는지 검사
   );
 
   // 현재 페이지의 아이템 계산
-  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
   //전체 페이지 수 계산 = 현재 필터링된 항목의 총 개수/ 한 페이지에 표시할 항목 수 - 나눗셈 결과 올림
-  const startIndex = (currentPage - 1) * itemsPerPage; //현재 페이지에서 시작할 데이터의 인덱스
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE; //현재 페이지에서 시작할 데이터의 인덱스
   const currentItems = filteredItems.slice(
     startIndex,
-    startIndex + itemsPerPage
+    startIndex + ITEMS_PER_PAGE,
   ); //현재 페이지의 데이터만 추출
 
   return (
@@ -65,19 +91,20 @@ export function Main() {
 
       <S.ProductGrid>
         {/* currentItems 배열이 비어 있지 않으면 상품 목록을 출력 */}
-        {currentItems.length > 0 ? (
-          currentItems.map((item, index) => (
-            <Link to={`/post/${item.id}`} style={{ textDecoration: "none"}}>
-            <S.ProductCard key={index}>
-              {/* 상품 이미지 컴포넌트 */}
-              <S.ProductImage />
-              {/* 상품 이름 표시 */}
-              <S.ProductTitle>{item.title}</S.ProductTitle>
-              {/* 상품 가격 표시 (천 단위 구분 기호 추가) */}
-              <S.ProductPrice>
-                {Number(item.price.replace(/,/g, "")).toLocaleString()}원
-              </S.ProductPrice>
-            </S.ProductCard>
+        {data.length > 0 ? (
+          data.map(({ representativeImage, title, price, postId }) => (
+            <Link
+              to={`/post/${postId}`}
+              key={postId}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <S.ProductCard key={postId}>
+                <S.ImageContainer>
+                  <S.ProductImage src={representativeImage} alt="상품 이미지" />
+                </S.ImageContainer>
+                <S.ProductTitle>{title}</S.ProductTitle>
+                <S.ProductPrice>{price.toLocaleString()}원</S.ProductPrice>
+              </S.ProductCard>
             </Link>
           ))
         ) : (
