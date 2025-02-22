@@ -9,26 +9,36 @@ import { API_URLS } from "../../consts";
 export function Detail() {
 
   const { postId } = useParams();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState("");
 
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const response = await fetchApi(`${API_URLS.posts}?postId=${postId}`, {
-          method: "GET",
-        });
+        const response = await fetchApi(API_URLS.posts, { method: "GET" });
+        console.log(response);
+
         if (response.status === 200) {
-          const data = response.data;
-          setProduct({
-            post_id: data.postId,
-            user_id: data.userId,
-            title: data.title,
-            location: data.location,
-            price: data.price,
-            content: data.content,
-            transaction_status: data.transactionStatus,
-            image: data.representativeImage,
-          });
+          
+          const contentArray = response.content;
+          
+          const selectedItem = contentArray.find(
+            (item) => String(item.postId) === postId
+          );
+
+          if (selectedItem) {
+            setProduct({
+              post_id: selectedItem.postId,
+              user_id: selectedItem.userId,
+              title: selectedItem.title,
+              location: selectedItem.location,
+              price: selectedItem.price,
+              content: selectedItem.content,
+              transaction_status: selectedItem.transactionStatus,
+              image: selectedItem.representativeImage || "https://picsum.photos/600/300",
+              category: selectedItem.category,
+              itemCondition: selectedItem.itemCondition,
+            });
+          }
         }
       } catch (err) {
         console.error(err);
@@ -63,7 +73,7 @@ export function Detail() {
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>상품 상태 |</S.InfoLabel>
-            <S.InfoValue>{product.status}</S.InfoValue>
+            <S.InfoValue>{product.itemCondition}</S.InfoValue>
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>가격 |</S.InfoLabel>
