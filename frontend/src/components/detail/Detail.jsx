@@ -9,7 +9,7 @@ import { API_URLS } from "../../consts";
 export function Detail() {
 
   const { postId } = useParams();
-  const [product, setProduct] = useState("");
+  const [product, setProduct] = useState({});
 
   useEffect(() => {
     async function fetchProduct() {
@@ -19,9 +19,7 @@ export function Detail() {
 
         if (response.status === 200) {
           
-          const contentArray = response.content;
-          
-          const selectedItem = contentArray.find(
+          const selectedItem = response.content.find(
             (item) => String(item.postId) === postId
           );
 
@@ -34,13 +32,20 @@ export function Detail() {
               price: selectedItem.price,
               content: selectedItem.content,
               transaction_status: selectedItem.transactionStatus,
-              image: selectedItem.representativeImage || "https://picsum.photos/600/300",
+              image: selectedItem.representativeImage,
               category: selectedItem.category,
-              itemCondition: selectedItem.itemCondition,
+              itemCondition: selectedItem.itemCondition
             });
           }
-        }
+        }  
       } catch (err) {
+        if (err.status === 400) {
+          alert("잘못된 요청 형식입니다.");
+        } else if (err.status === 404) {
+          alert("게시글을 찾을 수 없습니다.");
+        } else {
+          alert("오류가 발생했습니다.");
+        }
         console.error(err);
       }
     }
