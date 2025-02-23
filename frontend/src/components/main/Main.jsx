@@ -17,10 +17,6 @@ export function Main() {
       const response = await fetchApi(API_URLS.posts, {
         method: "GET",
       });
-<<<<<<< HEAD
-
-=======
->>>>>>> f528c57b55098498e687eedfa277dacda95d480a
       setItems(response?.content);
     } catch (err) {
       console.error(err);
@@ -31,96 +27,6 @@ export function Main() {
     fetchItems();
   }, []);
 
-<<<<<<< HEAD
-  /*const data = [
-    {
-      postId: 1,
-      userId: 10,
-      title: "맥북 프로 16인치 판매합니다",
-      price: 1200000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/300",
-    },
-    {
-      postId: 2,
-      userId: 10,
-      title: "아이패드 에어 4세대 + 애플펜슬 2세대",
-      location: "이대역",
-      price: 500000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/100",
-      createdAt: "2025-02-15T12:34:56",
-      updatedAt: "2025-02-15T12:34:56",
-    },
-    {
-      postId: 5,
-      userId: 20,
-      title: "갤럭시 S23 울트라 팝니다",
-      location: "학교 정문",
-      price: 800000,
-      transactionStatus: "RESERVED",
-      representativeImage: "https://picsum.photos/600/200",
-      createdAt: "2025-02-14T15:12:30",
-      updatedAt: "2025-02-14T15:12:30",
-    },
-    {
-      title: "스타벅스 아메리카노 기프티콘",
-      price: 3500,
-      transactionStatus: "SOLD_OUT",
-      representativeImage: "https://picsum.photos/600/300?random=3",
-      category: "식품",
-    },
-
-    {
-      title: "캠핑용 폴딩체어 2개 세트",
-      price: 40000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/300?random=4",
-      category: "레저/스포츠",
-    },
-    {
-      title: "아이패드 에어 4세대 + 애플펜슬 2세대",
-      price: 700000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/300?random=5",
-      category: "전자기기",
-    },
-    {
-      title: "여성용 오버핏 트렌치코트 베이지 M",
-      price: 55000,
-      transactionStatus: "RESERVED",
-      representativeImage: "https://picsum.photos/600/300?random=6",
-      category: "패션",
-    },
-    {
-      title: "새상품 샤오미 공기청정기 4세대",
-      price: 150000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/300?random=7",
-      category: "생활가전",
-    },
-    {
-      title: "롯데리아 새우버거 세트 기프티콘",
-      price: 6000,
-      transactionStatus: "SOLD_OUT",
-      representativeImage: "https://picsum.photos/600/300?random=8",
-      category: "식품",
-    },
-    {
-      title: "아이유 콘서트 티켓 VIP석 (1매)",
-      price: 180000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/300?random=7",
-      category: "티켓/문화",
-    },
-  ];
-
-  useEffect(() => {
-    setItems(data); // 컴포넌트가 마운트될 때 data를 상태로 설정
-  }, []);*/
-
-=======
->>>>>>> f528c57b55098498e687eedfa277dacda95d480a
   // 검색 필터 적용
   const filteredItems = items.filter(
     (item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())
