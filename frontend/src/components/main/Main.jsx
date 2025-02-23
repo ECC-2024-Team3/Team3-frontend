@@ -17,7 +17,10 @@ export function Main() {
       const response = await fetchApi(API_URLS.posts, {
         method: "GET",
       });
+<<<<<<< HEAD
 
+=======
+>>>>>>> f528c57b55098498e687eedfa277dacda95d480a
       setItems(response?.content);
     } catch (err) {
       console.error(err);
@@ -28,6 +31,7 @@ export function Main() {
     fetchItems();
   }, []);
 
+<<<<<<< HEAD
   /*const data = [
     {
       postId: 1,
@@ -115,6 +119,8 @@ export function Main() {
     setItems(data); // 컴포넌트가 마운트될 때 data를 상태로 설정
   }, []);*/
 
+=======
+>>>>>>> f528c57b55098498e687eedfa277dacda95d480a
   // 검색 필터 적용
   const filteredItems = items.filter(
     (item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())
