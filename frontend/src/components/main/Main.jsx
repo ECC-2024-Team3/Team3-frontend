@@ -17,10 +17,7 @@ export function Main() {
       const response = await fetchApi(API_URLS.posts, {
         method: "GET",
       });
-
-      if (response.status === 200) {
-        setItems(response?.data);
-      }
+      setItems(response?.content);
     } catch (err) {
       console.error(err);
     }
@@ -29,31 +26,6 @@ export function Main() {
   useEffect(() => {
     fetchItems();
   }, []);
-
-  const data = [
-    {
-      postId: 1,
-      userId: 10,
-      title: "맥북 프로 16인치 판매합니다",
-      location: "이대역",
-      price: 1200000,
-      transactionStatus: "ON_SALE",
-      representativeImage: "https://picsum.photos/600/300",
-      createdAt: "2025-02-15T12:34:56",
-      updatedAt: "2025-02-15T12:34:56",
-    },
-    {
-      postId: 5,
-      userId: 20,
-      title: "갤럭시 S23 울트라 팝니다",
-      location: "학교 정문",
-      price: 800000,
-      transactionStatus: "RESERVED",
-      representativeImage: "https://picsum.photos/600/200",
-      createdAt: "2025-02-14T15:12:30",
-      updatedAt: "2025-02-14T15:12:30",
-    },
-  ];
 
   // 검색 필터 적용
   const filteredItems = items.filter(
@@ -91,8 +63,8 @@ export function Main() {
 
       <S.ProductGrid>
         {/* currentItems 배열이 비어 있지 않으면 상품 목록을 출력 */}
-        {data.length > 0 ? (
-          data.map(({ representativeImage, title, price, postId }) => (
+        {currentItems.length > 0 ? (
+          currentItems.map(({ representativeImage, title, price, postId }) => (
             <Link
               to={`/post/${postId}`}
               key={postId}
