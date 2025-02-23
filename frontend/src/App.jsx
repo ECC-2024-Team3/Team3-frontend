@@ -8,8 +8,6 @@ import {
   MyPage,
   MyPosts,
   MyInfo,
-  LikePosts,
-  BookmarkedPosts,
   Register,
   Detail,
 } from "./components";
@@ -37,8 +35,6 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/myinfo" element={<MyInfo />} />
         <Route path="/mypage/myposts" element={<MyPosts />} />
-        <Route path="/mypage/likeposts" element={<LikePosts />} />
-        <Route path="/mypage/bookmarkedposts" element={<BookmarkedPosts />} />
         <Route path="/mypage/mycomments" element={<MyComments />} />
         <Route path="/register" element={<Register />} />
         <Route path="/post/:postId" element={<Detail />} />
