@@ -14,12 +14,6 @@ export function MyPage() {
         <Link to="/mypage/myposts" style={{ textDecorationLine: "none" }}>
           <S.Button>내가 올린 게시물 관리</S.Button>
         </Link>
-        <Link to="/mypage/likeposts" style={{ textDecorationLine: "none" }}>
-          <S.Button>좋아요 누른 게시물 관리</S.Button>
-        </Link>
-        <Link to="/mypage/likeposts" style={{ textDecorationLine: "none" }}>
-          <S.Button>북마크한 게시물 관리</S.Button>
-        </Link>
         <Link to="/mypage/mycomments" style={{ textDecorationLine: "none" }}>
           <S.Button>내 댓글 관리</S.Button>
         </Link>

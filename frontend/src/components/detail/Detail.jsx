@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import * as S from "./Detail.style";
 import Header from "../common/Header";
 import { useParams } from "react-router-dom";
-import likedbuttonfillpng from "./liked_button_fill.png";
-import likedbuttonemptypng from "./liked_button_empty.png";
 import productexampleavif from "./product_example.avif";
-import bookmarkemptypng from "./bookmark_empty.png";
-import bookmarkedpng from "./bookmarked.png";
 import { Comment } from "./Comment";
 
 export function Detail() {
