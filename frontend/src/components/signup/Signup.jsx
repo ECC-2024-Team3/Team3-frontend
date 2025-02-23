@@ -2,13 +2,14 @@ import { useState } from "react";
 import cucumberpng from "./cucumber.png";
 import { useNavigate } from "react-router-dom";
 import * as S from "./Signup.style.jsx";
-import axios from "axios";
+//import { API_URLS } from "../../consts";
+//import { fetchApi } from "../../utils";
 
 export function Signup() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [pwcheck, setPwcheck] = useState("");
-  const [name, setName] = useState("");
+  const [username, setusername] = useState("");
 
   const navigate = useNavigate();
 
@@ -36,26 +37,19 @@ export function Signup() {
       setPwValid(false);
     }
   };
-  /*
-  const handleSignup = async () => {
+
+  /*const handleSignup = async () => {
     if (!emailValid || !pwValid || pw !== pwcheck) {
       alert("입력한 정보를 다시 확인해주세요.");
       return;
     }
 
-    const requestData = {
-      id: name,
-      username: name,
-      email: email,
-      password1: pw,
-      password2: pwcheck,
-    };
-
     try {
-      const response = await axios.post(
-        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/api/users/join",
-        requestData
-      );
+      const response = await fetchApi(API_URLS.join, {
+        method: "POST",
+        body: JSON.stringify({ email, password: pw }),
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (response.status === 201) {
         alert(response.data.success);
@@ -118,8 +112,8 @@ export function Signup() {
         <S.InputWrap>
           <S.Input
             type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={username}
+            onChange={(e) => setusername(e.target.value)}
           />
         </S.InputWrap>
 

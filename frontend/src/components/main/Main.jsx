@@ -28,9 +28,8 @@ export function Main() {
   }, []);
 
   // 검색 필터 적용
-  const filteredItems = items.filter(
-    (item) => item.title.toLowerCase().includes(searchTerm.toLowerCase())
-    // item.title을 소문자로 변환하여 searchTerm을 소문자로 변환한 값이 포함되는지 검사
+  const filteredItems = items.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // 현재 페이지의 아이템 계산
