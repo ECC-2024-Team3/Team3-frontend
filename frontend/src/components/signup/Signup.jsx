@@ -36,7 +36,7 @@ export function Signup() {
       setPwValid(false);
     }
   };
-
+  /*
   const handleSignup = async () => {
     if (!emailValid || !pwValid || pw !== pwcheck) {
       alert("입력한 정보를 다시 확인해주세요.");
@@ -69,6 +69,11 @@ export function Signup() {
           "서버 오류가 발생했습니다. 다시 시도해주세요."
       );
     }
+  };*/
+
+  const onClickConfirmButton = () => {
+    alert("회원가입에 성공했습니다.");
+    navigate("/");
   };
 
   return (
@@ -90,13 +95,15 @@ export function Signup() {
           <S.Input type="password" value={pw} onChange={handlePw} />
         </S.InputWrap>
         <S.ErrorMessageWrap>
-          {!pwValid && pw.length > 0 && <div>8자 이상 입력해주세요.</div>}
+          {!pwValid && pw.length > 0 && (
+            <div>올바른 비밀번호를 입력해주세요.</div>
+          )}
         </S.ErrorMessageWrap>
 
         <S.InputTitle>비밀번호 확인</S.InputTitle>
         <S.InputWrap>
           <S.Input
-            type="text"
+            type="password"
             value={pwcheck}
             onChange={(e) => setPwcheck(e.target.value)}
           />
@@ -116,7 +123,7 @@ export function Signup() {
           />
         </S.InputWrap>
 
-        <S.BottomButton onClick={handleSignup}>회원가입</S.BottomButton>
+        <S.BottomButton onClick={onClickConfirmButton}>회원가입</S.BottomButton>
       </S.ContentWrap>
     </S.Page>
   );

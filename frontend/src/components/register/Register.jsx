@@ -2,7 +2,8 @@ import { useState } from "react";
 import Header from "../common/Header";
 import * as S from "./Register.style";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { API_URLS } from "../../consts";
+import { fetchApi } from "../../utils";
 
 export function Register() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ export function Register() {
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [condition, setCondition] = useState("");
+  const [itemCondition, setitemCondition] = useState("");
   const [content, setContent] = useState("");
   const [price, setPrice] = useState("");
   const [isFree, setIsFree] = useState(false);
@@ -31,7 +32,7 @@ export function Register() {
       images,
       title,
       category,
-      condition,
+      itemCondition,
       content,
       price: isFree ? 0 : price,
       location,
@@ -39,11 +40,16 @@ export function Register() {
     };
 
     try {
-      await axios.post(
-        "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/",
-        postData
-      );
-      navigate("/main");
+      const response = await fetchApi(API_URLS.posts, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postData),
+      });
+      if (response.status === 201) {
+        navigate("/main");
+      }
     } catch (error) {
       console.error(
         "요청 실패:",
@@ -110,9 +116,9 @@ export function Register() {
 
           <S.Label>상품 상태</S.Label>
           <S.Select
-            name="condition"
-            value={condition}
-            onChange={(e) => setCondition(e.target.value)}
+            name="itemCondition"
+            value={itemCondition}
+            onChange={(e) => setitemCondition(e.target.value)}
           >
             <option>선택하세요</option>
             <option>새 상품</option>
