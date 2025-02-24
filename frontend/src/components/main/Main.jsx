@@ -17,7 +17,7 @@ export function Main() {
       const response = await fetchApi(API_URLS.posts, {
         method: "GET",
       });
-      setItems(response?.content);
+      setItems(response?.content || []);
     } catch (err) {
       console.error(err);
     }
@@ -98,7 +98,7 @@ export function Main() {
           <S.PageButton
             key={i} // 각 버튼에 고유 키 부여
             onClick={() => setCurrentPage(i + 1)} // 페이지 번호 클릭 시 해당 페이지로 이동
-            active={currentPage === i + 1} // 현재 페이지 강조
+            $active={currentPage === i + 1} // 현재 페이지 강조
           >
             {i + 1} {/* 페이지 번호 표시 */}
           </S.PageButton>
