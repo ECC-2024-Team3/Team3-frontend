@@ -78,11 +78,11 @@ export function Detail() {
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>상품 상태 |</S.InfoLabel>
-            <S.InfoValue>{product.status}</S.InfoValue>
+            <S.InfoValue>{product.itemCondition}</S.InfoValue>
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>가격 |</S.InfoLabel>
-            <S.PriceValue>{product.price.toLocaleString()}원</S.PriceValue>
+            <S.PriceValue>{product.price}원</S.PriceValue>
           </S.InfoRow>
         </S.ProductDetails>
       </S.ProductContainer>
