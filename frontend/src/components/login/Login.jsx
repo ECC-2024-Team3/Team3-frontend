@@ -20,7 +20,7 @@ export function Login() {
     try {
       const response = await fetchApi(API_URLS.login, {
         method: "POST",
-        body: JSON.stringify({ id: email, password }),
+        body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
       });
   
