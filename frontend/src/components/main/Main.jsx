@@ -17,7 +17,7 @@ export function Main() {
       const response = await fetchApi(API_URLS.posts, {
         method: "GET",
       });
-      setItems(response?.content);
+      setItems(response?.content || []);
     } catch (err) {
       console.error(err);
     }
