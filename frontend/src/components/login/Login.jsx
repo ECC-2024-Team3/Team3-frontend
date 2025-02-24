@@ -2,34 +2,25 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import cucumberpng from "./cucumber.png";
 import * as S from "../signup/Signup.style.jsx";
-//import { API_URLS } from "../../consts";
-//import { fetchApi } from "../../utils";
+import { API_URLS } from "../../consts";
+import { fetchApi } from "../../utils";
 
-const User = {
-  email: "ewha1886@naver.com",
-  pw: "womansuni012",
-};
+// const User = {
+//   email: "ewha1886@naver.com",
+//   password: "womansuni012",
+// };
 
 export function Login() {
   const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
+  const [password, setPw] = useState("");
 
   const navigate = useNavigate();
 
-  const onClickConfirmButton = () => {
-    if (email === User.email && pw === User.pw) {
-      alert("로그인에 성공했습니다.");
-      navigate("/main");
-    } else {
-      alert("이메일 또는 비밀번호를 확인해 주세요. ");
-    }
-  };
-
-  /*const onClickConfirmButton = async () => {
+  const onClickConfirmButton = async () => {
     try {
       const response = await fetchApi(API_URLS.login, {
         method: "POST",
-        body: JSON.stringify({ id: email, pw }),
+        body: JSON.stringify({ id: email, password }),
         headers: { "Content-Type": "application/json" },
       });
   
@@ -55,7 +46,7 @@ export function Login() {
         error.response?.data?.error || "네트워크 오류가 발생했습니다. 다시 시도해 주세요."
       );
     }
-  };*/
+  };
 
   return (
     <S.Page>
@@ -74,7 +65,7 @@ export function Login() {
         <S.InputWrap>
           <S.Input
             type="password"
-            value={pw}
+            value={password}
             onChange={(e) => setPw(e.target.value)}
           />
         </S.InputWrap>

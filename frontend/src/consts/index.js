@@ -5,5 +5,6 @@ export const API_URLS = {
   users: `${COMMON_API_URL}/users`,
   posts: `${COMMON_API_URL}/posts`,
   search: `${COMMON_API_URL}/posts/search`,
-  join: `${COMMON_API_URL}/users/join`,
+  signup: `${COMMON_API_URL}/users/signup`,
+  login: `${COMMON_API_URL}/users/login`
 };

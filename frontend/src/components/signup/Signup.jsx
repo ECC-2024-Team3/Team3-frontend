@@ -2,14 +2,14 @@ import { useState } from "react";
 import cucumberpng from "./cucumber.png";
 import { useNavigate } from "react-router-dom";
 import * as S from "./Signup.style.jsx";
-//import { API_URLS } from "../../consts";
-//import { fetchApi } from "../../utils";
+import { API_URLS } from "../../consts";
+import { fetchApi } from "../../utils";
 
 export function Signup() {
   const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
-  const [pwcheck, setPwcheck] = useState("");
-  const [username, setusername] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
@@ -27,9 +27,9 @@ export function Signup() {
     }
   };
 
-  const handlePw = (e) => {
+  const handlePassword = (e) => {
     //event 받아줌
-    setPw(e.target.value);
+    setPassword(e.target.value);
     const regex = /^[A-Za-z0-9]{8,20}$/;
     if (regex.test(e.target.value)) {
       setPwValid(true);
@@ -38,16 +38,21 @@ export function Signup() {
     }
   };
 
-  /*const handleSignup = async () => {
-    if (!emailValid || !pwValid || pw !== pwcheck) {
+  const handleSignup = async () => {
+    if (!emailValid || !pwValid || password !== confirmPassword) {
       alert("입력한 정보를 다시 확인해주세요.");
       return;
     }
 
     try {
-      const response = await fetchApi(API_URLS.join, {
+      const response = await fetchApi(API_URLS.signup, {
         method: "POST",
-        body: JSON.stringify({ email, password: pw }),
+        body: JSON.stringify({ 
+          email, 
+          nickname, 
+          password, 
+          confirmPassword 
+        }),
         headers: { "Content-Type": "application/json" },
       });
 
@@ -63,10 +68,10 @@ export function Signup() {
           "서버 오류가 발생했습니다. 다시 시도해주세요."
       );
     }
-  };*/
+  };
 
   const onClickConfirmButton = () => {
-    alert("회원가입에 성공했습니다.");
+    alert("회원가입을 축하합니다.");
     navigate("/");
   };
 
@@ -86,10 +91,10 @@ export function Signup() {
 
         <S.InputTitle marginTop="26px">비밀번호</S.InputTitle>
         <S.InputWrap>
-          <S.Input type="password" value={pw} onChange={handlePw} />
+          <S.Input type="password" value={password} onChange={handlePassword} />
         </S.InputWrap>
         <S.ErrorMessageWrap>
-          {!pwValid && pw.length > 0 && (
+          {!pwValid && password.length > 0 && (
             <div>올바른 비밀번호를 입력해주세요.</div>
           )}
         </S.ErrorMessageWrap>
@@ -98,26 +103,28 @@ export function Signup() {
         <S.InputWrap>
           <S.Input
             type="password"
-            value={pwcheck}
-            onChange={(e) => setPwcheck(e.target.value)}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </S.InputWrap>
         <S.ErrorMessageWrap>
-          {!pwValid && pwcheck.length > 0 && (
+          {password !== !confirmPassword && confirmPassword.length > 0 && (
             <div>비밀번호가 일치하지 않습니다.</div>
           )}
         </S.ErrorMessageWrap>
 
-        <S.InputTitle>이름</S.InputTitle>
+        <S.InputTitle>닉네임</S.InputTitle>
         <S.InputWrap>
           <S.Input
             type="text"
-            value={username}
-            onChange={(e) => setusername(e.target.value)}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
           />
         </S.InputWrap>
 
-        <S.BottomButton onClick={onClickConfirmButton}>회원가입</S.BottomButton>
+        <S.BottomButton onClick={handleSignup}>
+          회원가입
+        </S.BottomButton>
       </S.ContentWrap>
     </S.Page>
   );
