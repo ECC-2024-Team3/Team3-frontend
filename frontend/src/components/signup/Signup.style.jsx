@@ -31,7 +31,7 @@ export const InputWrap = styled.div`
   border-radius: 8px;
   padding: 16px;
   margin-top: 8px;
-  background-color: #fff8f3;
+  background-color: rgb(251, 251, 251);
   border: 1px solid #e2e0e0;
 
   &:focus-within {
