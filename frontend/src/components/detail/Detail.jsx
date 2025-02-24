@@ -1,15 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import * as S from "./Detail.style";
 import Header from "../common/Header";
+import { useParams } from "react-router-dom";
+import likedbuttonfillpng from "./liked_button_fill.png";
+import likedbuttonemptypng from "./liked_button_empty.png";
+import productexampleavif from "./product_example.avif";
+import bookmarkemptypng from "./bookmark_empty.png";
+import bookmarkedpng from "./bookmarked.png";
 import { Comment } from "./Comment";
-import { fetchApi } from "../../utils";
-import { API_URLS } from "../../consts";
 
 export function Detail() {
+  const items = [
+    { id: 1, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 2, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 3, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 4, title: "새상품/자켓 ...", price: "20,000" },
+    { id: 5, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 6, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 7, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 8, title: "새상품/자켓 ...", price: "20,000" },
+    { id: 9, title: "새상품/폴로 ...", price: "16,800" },
+    { id: 10, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 11, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 12, title: "아디다스", price: "20,000" },
+    { id: 13, title: "폴로 ...", price: "16,800" },
+    { id: 14, title: "사용감 없음/쿠션", price: "8,000" },
+    { id: 15, title: "스타벅스 기프트카드", price: "10,000" },
+    { id: 16, title: "새상품/자켓 ...", price: "20,000" },
+  ];
 
   const { postId } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState("");
 
   useEffect(() => {
     async function fetchProduct() {
@@ -19,7 +40,9 @@ export function Detail() {
 
         if (response.status === 200) {
           
-          const selectedItem = response.content.find(
+          const contentArray = response.content;
+          
+          const selectedItem = contentArray.find(
             (item) => String(item.postId) === postId
           );
 
@@ -32,20 +55,13 @@ export function Detail() {
               price: selectedItem.price,
               content: selectedItem.content,
               transaction_status: selectedItem.transactionStatus,
-              image: selectedItem.representativeImage,
+              image: selectedItem.representativeImage || "https://picsum.photos/600/300",
               category: selectedItem.category,
-              itemCondition: selectedItem.itemCondition
+              itemCondition: selectedItem.itemCondition,
             });
           }
-        }  
-      } catch (err) {
-        if (err.status === 400) {
-          alert("잘못된 요청 형식입니다.");
-        } else if (err.status === 404) {
-          alert("게시글을 찾을 수 없습니다.");
-        } else {
-          alert("오류가 발생했습니다.");
         }
+      } catch (err) {
         console.error(err);
       }
     }
@@ -59,6 +75,24 @@ export function Detail() {
 
       <S.TitleContainer>
         <S.MainTitle>중고 거래 상세 페이지</S.MainTitle>
+
+        <S.ButtonContainer>
+          <S.Button onClick={handleLikeToggle}>
+            <img
+              src={product.liked ? likedbuttonfillpng : likedbuttonemptypng}
+              alt="like button"
+              style={{ width: "32px", height: "32px" }}
+            />
+          </S.Button>
+
+          <S.Button onClick={handleBookmarkToggle}>
+            <img
+              src={product.bookmarked ? bookmarkedpng : bookmarkemptypng}
+              alt="bookmark_button"
+              style={{ width: "32px", height: "32px" }}
+            />
+          </S.Button>
+        </S.ButtonContainer>
       </S.TitleContainer>
 
       <S.Line />
@@ -78,11 +112,11 @@ export function Detail() {
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>상품 상태 |</S.InfoLabel>
-            <S.InfoValue>{product.itemCondition}</S.InfoValue>
+            <S.InfoValue>{product.status}</S.InfoValue>
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>가격 |</S.InfoLabel>
-            <S.PriceValue>{product.price}원</S.PriceValue>
+            <S.PriceValue>{product.price.toLocaleString()}원</S.PriceValue>
           </S.InfoRow>
         </S.ProductDetails>
       </S.ProductContainer>

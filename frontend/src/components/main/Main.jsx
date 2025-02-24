@@ -28,9 +28,8 @@ export function Main() {
   }, []);
 
   // 검색 필터 적용
-  const filteredItems = items.filter(
-    (item) => item.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    // item.title을 소문자로 변환하여 searchTerm을 소문자로 변환한 값이 포함되는지 검사
+  const filteredItems = items.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // 현재 페이지의 아이템 계산
@@ -39,7 +38,7 @@ export function Main() {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE; //현재 페이지에서 시작할 데이터의 인덱스
   const currentItems = filteredItems.slice(
     startIndex,
-    startIndex + ITEMS_PER_PAGE,
+    startIndex + ITEMS_PER_PAGE
   ); //현재 페이지의 데이터만 추출
 
   return (
@@ -48,7 +47,7 @@ export function Main() {
       <S.SearchContainer>
         <S.SearchInput
           type="text"
-          placeholder="상품명, 카테고리, 거래 장소 검색"
+          placeholder="상품명 검색"
           value={searchTerm}
           onChange={(e) => {
             setSearchTerm(e.target.value);
