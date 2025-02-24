@@ -3,18 +3,19 @@ import styled from "styled-components";
 export const Container = styled.div`
   min-height: 100vh;
   background-color: #f3f4f6;
-  padding: 20px;
 `;
 
 export const Title = styled.h2`
   font-size: 24px;
   margin-bottom: 20px;
+  padding: 0 0 0 20px;
 `;
 
 export const ButtonContainer = styled.div`
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  padding: 0 20px 0 20px;
 `;
 
 export const Button = styled.button`
