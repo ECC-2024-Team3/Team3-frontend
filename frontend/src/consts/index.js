@@ -8,5 +8,5 @@ export const API_URLS = {
   signup: `${COMMON_API_URL}/users/signup`,
   login: `${COMMON_API_URL}/users/login`,
   comments: `${COMMON_API_URL}/api/comments`,
-  mypage: `${COMMON_API_URL}/api/mypage/`
+  mypage: `${COMMON_API_URL}/api/mypage`
 };

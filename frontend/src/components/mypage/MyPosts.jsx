@@ -1,31 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as S from "./MyPosts.style";
 import Header from "../common/Header";
 import { Link } from "react-router-dom";
+import { fetchApi } from "../../utils";
+import { API_URLS } from "../../consts";
 
 export function MyPosts() {
 
-  const initialMyPosts = [
-    { id: 1, title: "새상품/폴로 ...", price: "16,800" },
-    { id: 2, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 3, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 4, title: "새상품/자켓 ...", price: "20,000" },
-    { id: 5, title: "새상품/폴로 ...", price: "16,800" },
-    { id: 6, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 7, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 8, title: "새상품/자켓 ...", price: "20,000" },
-    { id: 9, title: "새상품/폴로 ...", price: "16,800" },
-    { id: 10, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 11, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 12, title: "아디다스", price: "20,000" },
-    { id: 13, title: "폴로 ...", price: "16,800" },
-    { id: 14, title: "사용감 없음/쿠션", price: "8,000" },
-    { id: 15, title: "스타벅스 기프트카드", price: "10,000" },
-    { id: 16, title: "새상품/자켓 ...", price: "20,000" },
-  ];
-
-  const [myPosts, setMyPosts] = useState(initialMyPosts);
+  const [myPosts, setMyPosts] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
+  
+  useEffect(() => {
+    async function fetchMyPosts() {
+      try {
+        const response = await fetchApi(API_URLS.mypage, { method: "GET" });
+        
+        if (response.status === 200 && Array.isArray(response.data)) {
+          const mapped = response.data.map((post) => ({
+            id: post.postId,
+            title: post.title,
+            price: String(post.price),
+            representativeImage: post.representativeImage,
+        }));
+          setMyPosts(mapped);
+        }
+      } catch (error) {
+        console.error(error);
+        alert("게시글 조회 중 오류가 발생했습니다.");
+      }
+    }
+  
+    fetchMyPosts();
+  }, []);
 
   const handleSelect = (id) => {
     if (selectedPosts.includes(id)) {
@@ -76,7 +82,7 @@ export function MyPosts() {
     }
     const postId = selectedPosts[0];
     alert(`수정 페이지로 이동합니다.`);
-    <Link></Link>
+    <Link to={`/${postId}`}/>
   };
 
   return (
