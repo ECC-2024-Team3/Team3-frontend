@@ -42,9 +42,6 @@ export function Register() {
     try {
       const response = await fetchApi(API_URLS.posts, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify(postData),
       });
       if (response.status === 201) {

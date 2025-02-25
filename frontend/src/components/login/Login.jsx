@@ -21,7 +21,6 @@ export function Login() {
       const response = await fetchApi(API_URLS.login, {
         method: "POST",
         body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" },
       });
   
       if (response.status === 200) {
