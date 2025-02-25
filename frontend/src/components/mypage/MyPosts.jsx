@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import * as S from "./MyPosts.style";
 import Header from "../common/Header";
 import { Link } from "react-router-dom";
@@ -6,6 +7,7 @@ import { fetchApi } from "../../utils";
 import { API_URLS } from "../../consts";
 
 export function MyPosts() {
+  const { postId } = useParams();
 
   const [myPosts, setMyPosts] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
@@ -13,16 +15,22 @@ export function MyPosts() {
   useEffect(() => {
     async function fetchMyPosts() {
       try {
-        const response = await fetchApi(API_URLS.mypage, { method: "GET" });
+        const response = await fetchApi(`${API_URLS.mypage}/${postId}`, { method: "GET" });
         
-        if (response.status === 200 && Array.isArray(response.data)) {
-          const mapped = response.data.map((post) => ({
+        if (Array.isArray(response)) {
+          setMyPosts(response.map((p) => ({
+            id: p.postId,
+            title: p.title,
+            price: p.price,
+            representativeImage: p.representativeImage,
+          })));
+        } else if (response && Array.isArray(response.content)) {
+          setMyPosts(response.content.map((post) => ({
             id: post.postId,
             title: post.title,
-            price: String(post.price),
+            price: post.price,
             representativeImage: post.representativeImage,
-        }));
-          setMyPosts(mapped);
+        })));
         }
       } catch (error) {
         console.error(error);
@@ -50,28 +58,53 @@ export function MyPosts() {
     }
   };
 
-  const handleDeleteSelected = () => {
+  const handleDeleteSelected = async () => {
     if (selectedPosts.length === 0) {
       alert("선택된 게시글이 없습니다.");
       return;
     }
+
     const confirmed = window.confirm("선택한 게시글을 삭제하시겠습니까?");
-    if (confirmed) {
-      const updated = myPosts.filter((post) => !selectedPosts.includes(post.id));
-      setMyPosts(updated);
-      setSelectedPosts([]);
+    if (!confirmed) return;
+
+    try {
+      const queryParam = selectedPosts.join(",");
+      const response = await fetchApi(
+        `${API_URLS.mypage}posts?postIds=${queryParam}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response) {
+        const updated = myPosts.filter((post) => !selectedPosts.includes(post.id));
+        setMyPosts(updated);
+        setSelectedPosts([]);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("선택 게시글 삭제 중 오류가 발생했습니다.");
     }
   };
 
-  const handleDeleteAll = () => {
+  const handleDeleteAll = async () => {
     const confirmed = window.confirm("전체 게시글을 삭제하시겠습니까?");
-    if (confirmed) {
-      setMyPosts([]);
-      setSelectedPosts([]);
+    if (!confirmed) return;
+
+    try {
+      const response = await fetchApi(`${API_URLS.mypage}posts/all`, {
+        method: "DELETE",
+      });
+      if (response) {
+        setMyPosts([]);
+        setSelectedPosts([]);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("전체 게시글 삭제 중 오류가 발생했습니다.");
     }
   };
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     if (selectedPosts.length === 0) {
       alert("수정할 게시글을 선택해주세요.");
       return;
