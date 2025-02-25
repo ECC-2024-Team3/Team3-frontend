@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as S from "./Comment.style";
 import { fetchApi } from "../../utils";
+import { API_URLS } from "../../consts";
 
 export function Comment() {
   const { postId } = useParams();
@@ -14,12 +15,11 @@ export function Comment() {
   useEffect(() => {
     async function fetchComments() {
       try {
-        const data = await fetchApi(`API_URLS.comments/${postId}`, {
-          method: "GET",
-        });
+        const response = await fetchApi(`${API_URLS.comments}/post/${postId}`, { method: "GET" });
+        console.log(response);
 
-        if (data.status === 200 && Array.isArray(data.comments)) {
-          const mapped = data.comments.map((item) => ({
+        if (response && Array.isArray(response.comments)) {
+          const mapped = response.comments.map((item) => ({
             id: item.id,
             author: `User ${item.userId}`,
             text: item.content,
@@ -46,17 +46,17 @@ export function Comment() {
     try {
       const body = { content: newComment };
 
-      const data = await fetchApi(`API_URLS.comment/${postId}`, {
+      const response = await fetchApi(`${API_URLS.comments}/${postId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (data.status === 201 && data.comment) {
+      if (response && response.comment) {
         const newCommentObj = {
-          id: data.comment.id,
-          author: `User ${data.comment.userId}`,
-          text: data.comment.content,
+          id: response.comment.id,
+          author: `User ${response.comment.userId}`,
+          text: response.comment.content,
         };
         setComments((prev) => [...prev, newCommentObj]);
         setNewComment("");
@@ -80,17 +80,17 @@ export function Comment() {
 
     try {
       const body = { content: editText };
-      const data = await fetchApi(`/api/comments/${id}`, {
-        method: "PUT",
+      const response = await fetchApi(`${API_URLS.comments}/${id}}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (data.status === 200 && data.comment) {
+      if (response && response.comment) {
         setComments((prev) =>
           prev.map((c) =>
             c.id === id
-              ? { ...c, text: data.comment.content }
+              ? { ...c, text: response.comment.content }
               : c
           )
         );
@@ -108,11 +108,11 @@ export function Comment() {
     if (!confirmed) return;
 
     try {
-      const data = await fetchApi(`/api/comments/${id}`, {
+      const response = await fetchApi(`${API_URLS.comments}/${id}`, {
         method: "DELETE",
       });
 
-      if (data.status === 200) {
+      if (response) {
         setComments((prev) => prev.filter((c) => c.id !== id));
       }
     } catch (error) {
