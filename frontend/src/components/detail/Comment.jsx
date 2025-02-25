@@ -1,39 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import * as S from "./Comment.style";
+import { fetchApi } from "../../utils";
+import { API_URLS } from "../../consts";
 
 export function Comment() {
-  const [comments, setComments] = useState([
-    { id: 1, author: "사용자1", text: "안녕하세요! 물건 아직 남아있나요?" },
-    { id: 2, author: "이대댕김 (ewha1886)", text: "네 있어요!" },
-    { id: 3, author: "사용자 1", text: "혹시 언제 구매하셨던 물건인가요?" },
-    { id: 4, author: "이대댕김 (ewha1886)", text: "작년 12월이요~" },
-  ]);
+  const { postId } = useParams();
+
+  const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [editingId, setEditingId] = useState(null);
   const [editText, setEditText] = useState("");
 
-  const handleAddComment = () => {
+  useEffect(() => {
+    async function fetchComments() {
+      try {
+        const response = await fetchApi(`${API_URLS.comments}/post/${postId}`, { method: "GET" });
+        console.log(response);
+
+        if (response && Array.isArray(response.comments)) {
+          const mapped = response.comments.map((item) => ({
+            id: item.id,
+            author: `User ${item.userId}`,
+            text: item.content,
+          }));
+          setComments(mapped);
+        }
+      } catch (error) {
+        console.error(error);
+        alert("댓글을 불러오는 데 실패했습니다.");
+      }
+    }
+
+    if (postId) {
+      fetchComments();
+    }
+  }, [postId]);
+
+  const handleAddComment = async () => {
     if (newComment.trim() === "") {
       alert("댓글을 입력해주세요.");
       return;
     }
 
-    const newId = comments.length + 1;
-    const newCommentObj = {
-      id: newId,
-      author: "이대댕김 (ewha1886)",
-      text: newComment,
-    };
+    try {
+      const body = { content: newComment };
 
-    setComments([...comments, newCommentObj]);
-    setNewComment("");
-  };
+      const response = await fetchApi(`${API_URLS.comments}/${postId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
 
-  const handleDeleteComment = (id) => {
-    const confirmed = window.confirm("댓글을 삭제하시겠습니까?");
-    if (!confirmed) return;
-
-    setComments(comments.filter((comment) => comment.id !== id));
+      if (response && response.comment) {
+        const newCommentObj = {
+          id: response.comment.id,
+          author: `User ${response.comment.userId}`,
+          text: response.comment.content,
+        };
+        setComments((prev) => [...prev, newCommentObj]);
+        setNewComment("");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("댓글 작성에 실패했습니다.");
+    }
   };
 
   const handleEditComment = (comment) => {
@@ -41,17 +72,54 @@ export function Comment() {
     setEditText(comment.text);
   };
 
-  const handleSaveEdit = (id) => {
+  const handleSaveEdit = async (id) => {
     if (editText.trim() === "") {
       alert("내용을 입력해주세요.");
       return;
     }
 
-    setComments(
-      comments.map((c) => (c.id === id ? { ...c, text: editText } : c)),
-    );
-    setEditingId(null);
-    setEditText("");
+    try {
+      const body = { content: editText };
+      const response = await fetchApi(`${API_URLS.comments}/${id}}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (response && response.comment) {
+        setComments((prev) =>
+          prev.map((c) =>
+            c.id === id
+              ? { ...c, text: response.comment.content }
+              : c
+          )
+        );
+        setEditingId(null);
+        setEditText("");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("댓글 수정에 실패했습니다.");
+    }
+  };
+
+  const handleDeleteComment = async (id) => {
+    const confirmed = window.confirm("댓글을 삭제하시겠습니까?");
+    if (!confirmed) return;
+
+    try {
+      const response = await fetchApi(`${API_URLS.comments}/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response) {
+        setComments((prev) => prev.filter((c) => c.id !== id));
+      }
+    } catch (error) {
+      console.error(error);
+      alert("댓글 삭제에 실패했습니다.");
+    }
+
   };
 
   const handleCancelEdit = () => {

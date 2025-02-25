@@ -1,5 +1,5 @@
 export const COMMON_API_URL =
-  "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com/";
+  "http://oimarket-backend.ap-northeast-2.elasticbeanstalk.com";
 
 export const API_URLS = {
   users: `${COMMON_API_URL}/users`,
@@ -7,5 +7,6 @@ export const API_URLS = {
   search: `${COMMON_API_URL}/api/posts/search`,
   signup: `${COMMON_API_URL}/users/signup`,
   login: `${COMMON_API_URL}/users/login`,
+  comments: `${COMMON_API_URL}/api/comments`,
   mypage: `${COMMON_API_URL}/api/mypage/`
 };

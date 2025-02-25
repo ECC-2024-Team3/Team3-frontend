@@ -17,7 +17,7 @@ export function Detail() {
         const response = await fetchApi(API_URLS.posts, { method: "GET" });
         console.log(response);
 
-        if (response.status === 200) {
+        if (response && Array.isArray(response.content)) {
           
           const selectedItem = response.content.find(
             (item) => String(item.postId) === postId
@@ -39,13 +39,7 @@ export function Detail() {
           }
         }  
       } catch (err) {
-        if (err.status === 400) {
-          alert("잘못된 요청 형식입니다.");
-        } else if (err.status === 404) {
-          alert("게시글을 찾을 수 없습니다.");
-        } else {
-          alert("오류가 발생했습니다.");
-        }
+        alert("오류가 발생했습니다.");
         console.error(err);
       }
     }
@@ -78,7 +72,7 @@ export function Detail() {
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>상품 상태 |</S.InfoLabel>
-            <S.InfoValue>{product.status}</S.InfoValue>
+            <S.InfoValue>{product.itemCondition}</S.InfoValue>
           </S.InfoRow>
           <S.InfoRow>
             <S.InfoLabel>가격 |</S.InfoLabel>
