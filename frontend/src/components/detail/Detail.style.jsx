@@ -79,6 +79,7 @@ export const Description = styled.div`
   border: 1px solid #ddd;
   padding: 20px 20px;
   margin: 20px;
+  font-size: 20px;
 `;
 
 export const DescText = styled.p`
@@ -90,6 +91,7 @@ export const SellerInfo = styled.div`
   border: 1px solid #ddd;
   padding: 20px 20px;
   margin: 20px;
+  font-size: 20px;
 `;
 
 export const SellerName = styled.div`
