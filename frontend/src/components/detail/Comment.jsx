@@ -20,7 +20,8 @@ export function Comment() {
         });
         console.log(response);
 
-        if (response && Array.isArray(response.comments)) {
+        if (response && Array.isArray(response.content)) {
+
           const mapped = response.content.map((item) => ({
             id: item.commentId,
             author: `User ${item.userId}`,
@@ -47,17 +48,21 @@ export function Comment() {
 
     try {
       const body = { content: newComment };
-
+      const token = localStorage.getItem("token");
       const response = await fetchApi(`${API_URLS.comments}/${postId}`, {
         method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(body),
       });
 
-      if (response && response.comment) {
+      if (response && response.commentId) {
         const newCommentObj = {
-          id: response.content.commentId,
-          author: `User ${response.content.userId}`,
-          text: response.content.content,
+          id: response.commentId,
+          author: `User ${response.userId}`,
+          text: response.content,
         };
         setComments((prev) => [...prev, newCommentObj]);
         setNewComment("");
@@ -80,13 +85,18 @@ export function Comment() {
     }
 
     try {
+      const token = localStorage.getItem("token");
       const body = { content: editText };
-      const response = await fetchApi(`${API_URLS.comments}/${id}}`, {
+      const response = await fetchApi(`${API_URLS.comments}/${id}`, {
         method: "PATCH",
+        headers: { 
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(body),
       });
 
-      if (response && response.comment) {
+      if (response && response.commentId) {
         setComments((prev) =>
           prev.map((c) =>
             c.id === id
@@ -108,8 +118,12 @@ export function Comment() {
     if (!confirmed) return;
 
     try {
+      const token = localStorage.getItem("token");
       const response = await fetchApi(`${API_URLS.comments}/${id}`, {
         method: "DELETE",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
       });
 
       if (response) {
