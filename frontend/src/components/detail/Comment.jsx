@@ -48,7 +48,6 @@ export function Comment() {
 
       const response = await fetchApi(`${API_URLS.comments}/${postId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
@@ -82,7 +81,6 @@ export function Comment() {
       const body = { content: editText };
       const response = await fetchApi(`${API_URLS.comments}/${id}}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
