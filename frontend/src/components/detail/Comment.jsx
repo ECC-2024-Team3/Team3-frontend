@@ -15,12 +15,14 @@ export function Comment() {
   useEffect(() => {
     async function fetchComments() {
       try {
-        const response = await fetchApi(`${API_URLS.comments}/post/${postId}`, { method: "GET" });
+        const response = await fetchApi(`${API_URLS.comments}/post/${postId}`, { 
+          method: "GET",
+        });
         console.log(response);
 
         if (response && Array.isArray(response.comments)) {
-          const mapped = response.comments.map((item) => ({
-            id: item.id,
+          const mapped = response.content.map((item) => ({
+            id: item.commentId,
             author: `User ${item.userId}`,
             text: item.content,
           }));
@@ -48,15 +50,14 @@ export function Comment() {
 
       const response = await fetchApi(`${API_URLS.comments}/${postId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
       if (response && response.comment) {
         const newCommentObj = {
-          id: response.comment.id,
-          author: `User ${response.comment.userId}`,
-          text: response.comment.content,
+          id: response.content.commentId,
+          author: `User ${response.content.userId}`,
+          text: response.content.content,
         };
         setComments((prev) => [...prev, newCommentObj]);
         setNewComment("");
@@ -82,7 +83,6 @@ export function Comment() {
       const body = { content: editText };
       const response = await fetchApi(`${API_URLS.comments}/${id}}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
