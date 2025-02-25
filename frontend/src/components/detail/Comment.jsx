@@ -15,10 +15,10 @@ export function Comment() {
   useEffect(() => {
     async function fetchComments() {
       try {
-        const response = await fetchApi(`${API_URLS.comments}/${postId}`, { method: "GET" });
+        const response = await fetchApi(`${API_URLS.comments}/post/${postId}`, { method: "GET" });
         console.log(response);
 
-        if (response.status === 200 && Array.isArray(response.comments)) {
+        if (response && Array.isArray(response.comments)) {
           const mapped = response.comments.map((item) => ({
             id: item.id,
             author: `User ${item.userId}`,
@@ -46,13 +46,13 @@ export function Comment() {
     try {
       const body = { content: newComment };
 
-      const response = await fetchApi(`API_URLS.comment/${postId}`, {
+      const response = await fetchApi(`${API_URLS.comments}/${postId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (response.status === 201 && response.comment) {
+      if (response && response.comment) {
         const newCommentObj = {
           id: response.comment.id,
           author: `User ${response.comment.userId}`,
@@ -80,13 +80,13 @@ export function Comment() {
 
     try {
       const body = { content: editText };
-      const response = await fetchApi(`/api/comments/${id}`, {
-        method: "PUT",
+      const response = await fetchApi(`${API_URLS.comments}/${id}}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
 
-      if (response.status === 200 && response.comment) {
+      if (response && response.comment) {
         setComments((prev) =>
           prev.map((c) =>
             c.id === id
@@ -108,11 +108,11 @@ export function Comment() {
     if (!confirmed) return;
 
     try {
-      const response = await fetchApi(`/api/comments/${id}`, {
+      const response = await fetchApi(`${API_URLS.comments}/${id}`, {
         method: "DELETE",
       });
 
-      if (response.status === 200) {
+      if (response) {
         setComments((prev) => prev.filter((c) => c.id !== id));
       }
     } catch (error) {
