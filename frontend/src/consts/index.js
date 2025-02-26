@@ -15,5 +15,5 @@ export const API_URLS = {
   mypageById: (userId) =>
     userId 
       ? `${COMMON_API_URL}/mypage/posts?userId=${userId}`  // ✅ userId 있을 때
-      : `${COMMON_API_URL}/myypage/posts`,
+      : `${COMMON_API_URL}/mypage/posts`,
 };
