@@ -37,6 +37,7 @@ function App() {
         <Route path="/mypage/myposts" element={<MyPosts />} />
         <Route path="/mypage/mycomments" element={<MyComments />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register/:postId" element={<Register />} />
         <Route path="/post/:postId" element={<Detail />} />
       </Routes>
     </BrowserRouter>
