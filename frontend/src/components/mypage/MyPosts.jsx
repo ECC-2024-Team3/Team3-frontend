@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as S from "./MyPosts.style";
 import Header from "../common/Header";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchApi } from "../../utils";
 import { API_URLS } from "../../consts";
 
 export function MyPosts() {
-  const { postId } = useParams();
+  const navigate = useNavigate();
 
   const [myPosts, setMyPosts] = useState([]);
   const [selectedPosts, setSelectedPosts] = useState([]);
@@ -15,32 +15,61 @@ export function MyPosts() {
   useEffect(() => {
     async function fetchMyPosts() {
       try {
+        const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
-        const response = await fetchApi(API_URLS.mypageById(userId), { method: "GET" });
+        if (!token || !userId) {
+          alert("로그인이 필요합니다!");
+          return navigate("/login");
+        }
+
+        const response = await fetchApi(API_URLS.mypageById(userId), { 
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          }
+        });
+
+        console.log("📌 마이페이지 게시글 조회 응답:", response);
         
-        if (Array.isArray(response)) {
-          setMyPosts(response.map((p) => ({
-            id: p.postId,
-            title: p.title,
-            price: p.price,
-            representativeImage: p.representativeImage,
-          })));
-        } else if (response && Array.isArray(response.content)) {
-          setMyPosts(response.content.map((post) => ({
-            id: post.postId,
-            title: post.title,
-            price: post.price,
-            representativeImage: post.representativeImage,
-        })));
+        if (response?.status === 200) {
+          const data = response.data;
+          if (Array.isArray(data)) {
+            setMyPosts(
+              data.map((p) => ({
+                id: p.postId,
+                title: p.title,
+                price: p.price,
+                representativeImage: p.representativeImage,
+              }))
+            );
+          }
+          else if (data && Array.isArray(data.content)) {
+            setMyPosts(
+              data.content.map((post) => ({
+                id: post.postId,
+                title: post.title,
+                price: post.price,
+                representativeImage: post.representativeImage,
+              }))
+            );
+          } else {
+            alert("게시글 정보를 불러올 수 없습니다.");
+          }
+        } else if (response?.status === 403) {
+          alert("접근 권한이 없습니다.");
+          navigate("/login");
+        } else {
+          alert("게시글 조회 중 오류가 발생했습니다.");
         }
       } catch (error) {
-        console.error(error);
+        console.error("🚨 게시글 조회 실패:", error);
         alert("게시글 조회 중 오류가 발생했습니다.");
       }
     }
-  
+
     fetchMyPosts();
-  }, []);
+  }, [navigate]);
 
   const handleSelect = (id) => {
     if (selectedPosts.includes(id)) {
