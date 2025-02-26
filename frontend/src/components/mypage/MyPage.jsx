@@ -73,7 +73,7 @@ export function MyPage() {
           <S.Button>내 정보 관리</S.Button>
         </Link>
         <Link to="/mypage/myposts" style={{ textDecorationLine: "none" }}>
-          <S.Button>내가 올린 게시물 관리</S.Button>
+          <S.Button>내 게시물 관리</S.Button>
         </Link>
         <Link to="/mypage/mycomments" style={{ textDecorationLine: "none" }}>
           <S.Button>내 댓글 관리</S.Button>

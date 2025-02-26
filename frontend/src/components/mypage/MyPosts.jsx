@@ -22,7 +22,7 @@ export function MyPosts() {
           return navigate("/login");
         }
 
-        const response = await fetchApi(API_URLS.mypageById(userId), { 
+        const response = await fetchApi(`${API_URLS.mypage}/posts`, { 
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
