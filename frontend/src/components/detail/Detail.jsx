@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import * as S from "./Detail.style";
 import Header from "../common/Header";
 import { Comment } from "./Comment";
@@ -9,6 +9,7 @@ import { API_URLS } from "../../consts";
 export function Detail() {
 
   const { postId } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState({});
 
   useEffect(() => {
@@ -47,12 +48,17 @@ export function Detail() {
     fetchProduct();
   }, [postId]);
 
+  const handleEdit = () => {
+    navigate(`/register/${postId}`);
+  };
+
   return (
     <div>
       <Header />
 
       <S.TitleContainer>
         <S.MainTitle>중고 거래 상세 페이지</S.MainTitle>
+        <S.Button onClick={handleEdit}>수정</S.Button>
       </S.TitleContainer>
 
       <S.Line />

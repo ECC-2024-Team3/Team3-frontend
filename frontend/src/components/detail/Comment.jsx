@@ -18,7 +18,7 @@ export function Comment() {
         const response = await fetchApi(`${API_URLS.comments}/post/${postId}`, { 
           method: "GET",
         });
-        console.log(response);
+        console.log("📌 댓글 응답:", response);
 
         if (response && Array.isArray(response.content)) {
 
