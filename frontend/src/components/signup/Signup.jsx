@@ -59,7 +59,7 @@ export function Signup() {
   
       if (response?.userId) {  // API 응답에 userId가 존재하는지 확인
         alert("회원가입이 완료되었습니다!");
-        navigate("/");
+        navigate("/main");
       } else {
         alert(response?.error || "회원가입에 실패했습니다.");
       }
