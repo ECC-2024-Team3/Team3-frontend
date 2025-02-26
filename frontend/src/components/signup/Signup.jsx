@@ -45,32 +45,43 @@ export function Signup() {
     }
   
     try {
-      const response = await fetchApi(API_URLS.signup, {
+      const signupResponse = await fetchApi(API_URLS.signup, {
         method: "POST",
-        body: JSON.stringify({ 
-          email, 
-          nickname, 
-          password, 
-          confirmPassword 
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, nickname, password, confirmPassword }),
       });
   
-      console.log("📌 회원가입 API 응답:", response);
+      console.log("📌 회원가입 API 응답:", signupResponse);
   
-      if (response.status === 200 && response.data && response.data.userId) {  // API 응답에 userId가 존재하는지 확인
-        localStorage.setItem("userId", response.data.userId);
-        alert("회원가입이 완료되었습니다!");
-        navigate("/main");
+      if (signupResponse.status === 200 && signupResponse.data?.userId) {
+        // ✅ 회원가입 후 바로 로그인 요청
+        const loginResponse = await fetchApi(API_URLS.login, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+  
+        console.log("📌 로그인 API 응답:", loginResponse);
+  
+        if (loginResponse.status === 200 && loginResponse.data?.token) {
+          localStorage.setItem("token", loginResponse.data.token);
+          localStorage.setItem("userId", loginResponse.data.userId); // ✅ userId 저장
+  
+          alert("회원가입이 완료되었습니다! 자동 로그인되었습니다.");
+          navigate("/main");
+        } else {
+          alert("회원가입은 완료되었지만 자동 로그인에 실패했습니다. 로그인 페이지로 이동합니다.");
+          navigate("/login");
+        }
       } else {
-        alert(response?.error || "회원가입에 실패했습니다.");
+        alert(signupResponse?.data?.error || "회원가입에 실패했습니다.");
       }
     } catch (error) {
       console.error("🚨 회원가입 오류:", error);
-      alert(
-        error.response?.data?.error || "서버 오류가 발생했습니다. 다시 시도해주세요."
-      );
+      alert(error.response?.data?.error || "서버 오류가 발생했습니다. 다시 시도해주세요.");
     }
-  };
+  };  
+  
 
   return (
     <S.Page>
