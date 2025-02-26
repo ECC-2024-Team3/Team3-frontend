@@ -62,12 +62,11 @@ export function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const finalPrice = isFree ? 0 : Number(price) || 0;
     const finalStatus = isFree ? "나눔" : transactionStatus || "판매 중";
-
+  
     const postData = {
-      images,
       title,
       category,
       itemCondition,
@@ -75,35 +74,43 @@ export function Register() {
       price: finalPrice,
       location,
       transactionStatus: finalStatus,
+      images: images.length > 0 ? images : [],  // ✅ 빈 배열 방지
     };
-
+  
+    console.log("📌 서버로 보낼 데이터:", JSON.stringify(postData, null, 2));
+  
     try {
-      let response;
-      if (isEditMode) {
-        response = await fetchApi(`${API_URLS.posts}/${postId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postData),
-        });
-      } else {
-        response = await fetchApi(API_URLS.posts, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postData),
-        });
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        return;
       }
-
+  
+      const response = await fetchApi(API_URLS.posts, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(postData),
+      });
+  
+      console.log("📌 게시글 등록 API 응답:", response);
+  
       if (response && (response.status === 200 || response.status === 201)) {
-        alert(isEditMode ? "게시글이 수정되었습니다." : "게시글이 등록되었습니다.");
+        alert("게시글이 등록되었습니다.");
         navigate("/main");
       } else {
+        console.error("🚨 오류 응답:", response);
         alert(response?.message || "요청 중 오류가 발생했습니다.");
       }
     } catch (error) {
-      console.error("요청 실패:", error);
-      alert("요청 실패");
+      console.error("🚨 요청 실패:", error);
+      alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
+  
+  
 
   const handleFreeItem = () => {
     setIsFree(!isFree);
