@@ -10,6 +10,7 @@ import {
   MyInfo,
   Register,
   Detail,
+  EasterEgg,
 } from "./components";
 import { createGlobalStyle } from "styled-components";
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/register/:postId" element={<Register />} />
         <Route path="/post/:postId" element={<Detail />} />
+        <Route path="/easteregg" element={<EasterEgg />} />
       </Routes>
     </BrowserRouter>
   );
