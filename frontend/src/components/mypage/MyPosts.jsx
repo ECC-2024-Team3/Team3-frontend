@@ -16,7 +16,7 @@ export function MyPosts() {
     async function fetchMyPosts() {
       try {
         const userId = localStorage.getItem("userId");
-        const response = await fetchApi(`${API_URLS.mypage}/posts?userId=${userId}`, { method: "GET" });
+        const response = await fetchApi(API_URLS.mypageById(userId), { method: "GET" });
         
         if (Array.isArray(response)) {
           setMyPosts(response.map((p) => ({
