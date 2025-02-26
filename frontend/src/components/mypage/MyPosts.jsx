@@ -15,7 +15,7 @@ export function MyPosts() {
   useEffect(() => {
     async function fetchMyPosts() {
       try {
-        const response = await fetchApi(`${API_URLS.mypage}/${postId}`, { method: "GET" });
+        const response = await fetchApi(`${API_URLS.mypage}/posts`, { method: "GET" });
         
         if (Array.isArray(response)) {
           setMyPosts(response.map((p) => ({
@@ -70,7 +70,7 @@ export function MyPosts() {
     try {
       const queryParam = selectedPosts.join(",");
       const response = await fetchApi(
-        `${API_URLS.mypage}posts?postIds=${queryParam}`,
+        `${API_URLS.mypage}/posts?postIds=${queryParam}`,
         {
           method: "DELETE",
         }
@@ -91,7 +91,7 @@ export function MyPosts() {
     if (!confirmed) return;
 
     try {
-      const response = await fetchApi(`${API_URLS.mypage}posts/all`, {
+      const response = await fetchApi(`${API_URLS.mypage}/posts/all`, {
         method: "DELETE",
       });
       if (response) {
