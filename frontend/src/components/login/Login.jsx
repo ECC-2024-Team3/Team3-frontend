@@ -23,13 +23,17 @@ export function Login() {
         body: JSON.stringify({ email, password }),
       });
   
+      console.log("📌 로그인 API 응답:", response); // 응답 로그 추가
+  
       if (response.status === 200) {
         alert(response.data.message);
         navigate("/main");
       } else if (response.status === 401) {
+        console.log("📌 401 응답 데이터:", response); // 401 응답 확인
+  
         if (
-          response.data.error === "가입되지 않은 id입니다." ||
-          response.data.error === "틀린 password 입니다."
+          response.data?.error === "가입되지 않은 id입니다." ||
+          response.data?.error === "틀린 password 입니다."
         ) {
           alert(response.data.error);
         } else {
@@ -38,14 +42,17 @@ export function Login() {
       } else if (response.status === 400) {
         alert("올바르지 않은 형식입니다.");
       } else {
+        console.log("📌 예외 처리되지 않은 응답:", response);
         alert("알 수 없는 오류가 발생했습니다. 다시 시도해 주세요.");
       }
     } catch (error) {
+      console.error("🚨 로그인 요청 오류:", error);
       alert(
         error.response?.data?.error || "네트워크 오류가 발생했습니다. 다시 시도해 주세요."
       );
     }
   };
+  
 
   return (
     <S.Page>

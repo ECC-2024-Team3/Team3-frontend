@@ -43,7 +43,7 @@ export function Signup() {
       alert("입력한 정보를 다시 확인해주세요.");
       return;
     }
-
+  
     try {
       const response = await fetchApi(API_URLS.signup, {
         method: "POST",
@@ -54,20 +54,23 @@ export function Signup() {
           confirmPassword 
         }),
       });
-
-      if (response.status === 201) {
-        alert(response.data.success);
+  
+      console.log("📌 회원가입 API 응답:", response);
+  
+      if (response?.userId) {  // API 응답에 userId가 존재하는지 확인
+        alert("회원가입이 완료되었습니다!");
         navigate("/");
       } else {
-        alert(response.data.error || "회원가입에 실패했습니다.");
+        alert(response?.error || "회원가입에 실패했습니다.");
       }
     } catch (error) {
+      console.error("🚨 회원가입 오류:", error);
       alert(
-        error.response?.data?.error ||
-          "서버 오류가 발생했습니다. 다시 시도해주세요."
+        error.response?.data?.error || "서버 오류가 발생했습니다. 다시 시도해주세요."
       );
     }
   };
+  
 
   const onClickConfirmButton = () => {
     alert("회원가입을 축하합니다.");
@@ -107,7 +110,7 @@ export function Signup() {
           />
         </S.InputWrap>
         <S.ErrorMessageWrap>
-          {password !== !confirmPassword && confirmPassword.length > 0 && (
+          {password !== confirmPassword && confirmPassword.length > 0 && (
             <div>비밀번호가 일치하지 않습니다.</div>
           )}
         </S.ErrorMessageWrap>
