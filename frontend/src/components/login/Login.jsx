@@ -18,6 +18,13 @@ export function Login() {
 
   const onClickConfirmButton = async () => {
     try {
+
+      const storedUserId = localStorage.getItem("userId");
+      if (!storedUserId) {
+        alert("회원가입이 필요합니다.");
+        return navigate("/signup");
+      }
+
       const response = await fetchApi(API_URLS.login, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -31,11 +38,9 @@ export function Login() {
           const userId = localStorage.getItem("userId");
 
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("userId", userId);
+          localStorage.setItem("userId", storedUserId);
           alert("로그인 성공!");
           navigate("/main");
-        } else {
-          alert("로그인 오류: 응답에서 토큰을 찾을 수 없습니다.");
         }
       } else if (response.status === 400) {
         console.log("📌 400 응답 데이터:", response);
@@ -54,8 +59,6 @@ export function Login() {
       );
     }
   };
-  
-  
 
   return (
     <S.Page>
