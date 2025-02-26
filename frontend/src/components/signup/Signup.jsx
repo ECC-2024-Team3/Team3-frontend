@@ -70,12 +70,6 @@ export function Signup() {
       );
     }
   };
-  
-
-  const onClickConfirmButton = () => {
-    alert("회원가입을 축하합니다.");
-    navigate("/");
-  };
 
   return (
     <S.Page>
