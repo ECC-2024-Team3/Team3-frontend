@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../common/Header";
 import * as S from "./Register.style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URLS } from "../../consts";
 import { fetchApi } from "../../utils";
 
 export function Register() {
   const navigate = useNavigate();
+  const { postId } = useParams(); 
+  const isEditMode = !!postId;
 
   const [images, setImages] = useState([]);
   const [title, setTitle] = useState("");
@@ -18,6 +20,39 @@ export function Register() {
   const [location, setLocation] = useState([]);
   const [transactionStatus, setTransactionStatus] = useState("");
 
+  useEffect(() => {
+    if (isEditMode) {
+      async function fetchPostDetail() {
+        try {
+          const response = await fetchApi(`${API_URLS.posts}/${postId}`, {
+            method: "GET",
+          });
+          if (response) {
+            const postData = response.data || response;
+            setTitle(postData.title || "");
+            setCategory(postData.category || "");
+            setitemCondition(postData.itemCondition || "");
+            setContent(postData.content || "");
+            setPrice(postData.price || "");
+            setLocation(postData.location || "");
+            setTransactionStatus(postData.transactionStatus || "ON_SALE");
+
+            if (postData.price === 0) {
+              setIsFree(true);
+            }
+            if (postData.images) {
+              setImages(postData.images);
+            }
+          }
+        } catch (err) {
+          console.error(err);
+          alert("게시글 정보를 불러오는 데 실패했습니다.");
+        }
+      }
+      fetchPostDetail();
+    }
+  }, [isEditMode, postId]);
+
   //이미지 파일을 업로드할 때 미리보기
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -28,30 +63,45 @@ export function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const finalPrice = isFree ? 0 : Number(price) || 0;
+    const finalStatus = isFree ? "나눔" : transactionStatus || "판매 중";
+
     const postData = {
       images,
       title,
       category,
       itemCondition,
       content,
-      price: isFree ? 0 : price,
+      price: finalPrice,
       location,
-      transactionStatus: isFree ? "나눔" : transactionStatus,
+      transactionStatus: finalStatus,
     };
 
     try {
-      const response = await fetchApi(API_URLS.posts, {
-        method: "POST",
-        body: JSON.stringify(postData),
-      });
-      if (response.status === 201) {
+      let response;
+      if (isEditMode) {
+        response = await fetchApi(`${API_URLS.posts}/${postId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(postData),
+        });
+      } else {
+        response = await fetchApi(API_URLS.posts, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(postData),
+        });
+      }
+
+      if (response && (response.status === 200 || response.status === 201)) {
+        alert(isEditMode ? "게시글이 수정되었습니다." : "게시글이 등록되었습니다.");
         navigate("/main");
+      } else {
+        alert(response?.message || "요청 중 오류가 발생했습니다.");
       }
     } catch (error) {
-      console.error(
-        "요청 실패:",
-        error.response?.data?.message || error.message
-      );
+      console.error("요청 실패:", error);
+      alert("요청 실패");
     }
   };
 
