@@ -6,8 +6,9 @@ import { fetchApi } from "../../utils";
 import { API_URLS } from "../../consts";
 
 export function MyInfo() {
-  const [userId, setUserId] = useState("");
-  const [userName, setUserName] = useState("");
+
+  const [userId, setUserId] = useState(userId);
+  const [userName, setUserName] = useState(userName);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -16,10 +17,20 @@ export function MyInfo() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("로그인이 필요합니다!");
+          return navigate("/login");
+        }
+
         const response = await fetchApi(`${API_URLS.mypage}/info`, {
           method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
-        if (response) {
+        if (response.status === 200 && response.data) {
           setUserId(response.userId || "");
           setUserName(response.userName || "");
         }
@@ -29,7 +40,7 @@ export function MyInfo() {
       }
     }
     fetchUserInfo();
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
