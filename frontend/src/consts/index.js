@@ -11,5 +11,9 @@ export const API_URLS = {
   signup: `${COMMON_API_URL}/users/signup`,
   login: `${COMMON_API_URL}/users/login`,
   comments: `${COMMON_API_URL}/comments`,
-  mypage: `${COMMON_API_URL}/mypage`
+  mypage: `${COMMON_API_URL}/mypage`,
+  mypageById: (userId) =>
+    userId 
+      ? `${COMMON_API_URL}/mypage/posts?userId=${userId}`  // ✅ userId 있을 때
+      : `${COMMON_API_URL}/myypage/posts`,
 };
