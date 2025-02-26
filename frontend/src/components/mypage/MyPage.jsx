@@ -14,7 +14,7 @@ export function MyPage() {
     if (!confirmed) return;
 
     try {
-      const response = await fetchApi(API_URLS.mypage + "info", {
+      const response = await fetchApi(`${API_URLS.mypage}/info`, {
         method: "DELETE",
       });
 
