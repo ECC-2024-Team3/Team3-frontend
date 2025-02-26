@@ -3,7 +3,6 @@ export const fetchApi = async (url, options) => {
     const token = localStorage.getItem("token");
     const response = await fetch(url, {
       headers: {
-        // TODO: 추후 토큰 추가
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
@@ -12,14 +11,16 @@ export const fetchApi = async (url, options) => {
 
     const contentType = response.headers.get("Content-Type");
 
+    let data;
     if (contentType && contentType.includes("application/json")) {
-      const data = await response.json();
-      return data;
+      data = await response.json();
     } else {
-      const textData = await response.text();
-      return textData;
+      data = await response.text();
     }
+
+    return { status: response.status, data }; // ✅ status 포함
   } catch (error) {
     console.error("Error:", error);
+    throw error;
   }
 };
