@@ -11,7 +11,7 @@ export function MyComments() {
   useEffect(() => {
     async function fetchMyComments() {
       try {
-        const response = await fetchApi(API_URLS.mypage + "comments", {
+        const response = await fetchApi(`${API_URLS.mypage}/comments`, {
           method: "GET",
         });
         if (Array.isArray(response)) {
@@ -32,7 +32,7 @@ export function MyComments() {
     if (!confirmed) return;
 
     try {
-      const response = await fetchApi(`${API_URLS.mypage}comments/${commentId}`, {
+      const response = await fetchApi(`${API_URLS.mypage}/comments/${commentId}`, {
         method: "DELETE",
       });
       if (response) {
