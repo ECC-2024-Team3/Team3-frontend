@@ -16,7 +16,7 @@ export default function Header() {
 
   return (
     <S.Header>
-      <Link to="/main">
+      <Link to="/easteregg">
         <S.Logo>
           <img src={logopng} alt="로고" />
         </S.Logo>
