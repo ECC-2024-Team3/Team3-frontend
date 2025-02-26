@@ -54,6 +54,7 @@ export function MyInfo() {
       }
 
       try {
+        const token = localStorage.getItem("token");
         const body = {
           userId,
           userName,
@@ -63,17 +64,22 @@ export function MyInfo() {
   
         const response = await fetchApi(`${API_URLS.mypage}/info`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json" 
+          },
           body: JSON.stringify(body),
         });
   
-        if (response) {
+        if (response.status === 200) {
           alert("회원 정보가 수정되었습니다.");
           navigate("/mypage");
+        } else {
+          alert("회원 정보 수정에 실패했습니다.");
         }
       } catch (err) {
         console.error(err);
-        alert("회원 정보 수정 중 오류가 발생했습니다.");
+        alert("오류가 발생했습니다.");
       }
     };
 
@@ -92,7 +98,7 @@ export function MyInfo() {
         </S.Form>
 
         <S.Form>
-          <S.Guide>이름(닉네임)</S.Guide>
+          <S.Guide>닉네임</S.Guide>
           <S.Input
             type="text"
             value={userName}
