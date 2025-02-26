@@ -20,6 +20,7 @@ export function Login() {
     try {
       const response = await fetchApi(API_URLS.login, {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
   
@@ -27,11 +28,15 @@ export function Login() {
   
       if (response.status === 200) {
         if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
           alert("로그인 성공!");
           navigate("/main");
         } else {
           alert("로그인 오류: 응답에서 토큰을 찾을 수 없습니다.");
         }
+      } else if (response.status === 400) {
+        console.log("📌 400 응답 데이터:", response);
+        alert(response.data?.error || "요청이 올바르지 않습니다.");
       } else if (response.status === 401) {
         console.log("📌 401 응답 데이터:", response);
         alert(response?.data?.error || "인증 오류가 발생했습니다.");
