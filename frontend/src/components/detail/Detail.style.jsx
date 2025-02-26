@@ -18,9 +18,11 @@ export const MainTitle = styled.h1`
 `;
 
 export const Button = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
+  background-color: #00462a;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 `;
 
 export const Line = styled.hr`
