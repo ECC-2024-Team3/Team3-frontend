@@ -6,8 +6,9 @@ import { fetchApi } from "../../utils";
 import { API_URLS } from "../../consts";
 
 export function MyInfo() {
-  const [userId, setUserId] = useState("");
-  const [userName, setUserName] = useState("");
+
+  const [userId, setUserId] = useState(userId);
+  const [userName, setUserName] = useState(userName);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -16,10 +17,20 @@ export function MyInfo() {
   useEffect(() => {
     async function fetchUserInfo() {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          alert("로그인이 필요합니다!");
+          return navigate("/login");
+        }
+
         const response = await fetchApi(`${API_URLS.mypage}/info`, {
           method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
-        if (response) {
+        if (response.status === 200 && response.data) {
           setUserId(response.userId || "");
           setUserName(response.userName || "");
         }
@@ -29,7 +40,7 @@ export function MyInfo() {
       }
     }
     fetchUserInfo();
-  }, []);
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,6 +54,7 @@ export function MyInfo() {
       }
 
       try {
+        const token = localStorage.getItem("token");
         const body = {
           userId,
           userName,
@@ -52,17 +64,22 @@ export function MyInfo() {
   
         const response = await fetchApi(`${API_URLS.mypage}/info`, {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json" 
+          },
           body: JSON.stringify(body),
         });
   
-        if (response) {
+        if (response.status === 200) {
           alert("회원 정보가 수정되었습니다.");
           navigate("/mypage");
+        } else {
+          alert("회원 정보 수정에 실패했습니다.");
         }
       } catch (err) {
         console.error(err);
-        alert("회원 정보 수정 중 오류가 발생했습니다.");
+        alert("오류가 발생했습니다.");
       }
     };
 
@@ -81,7 +98,7 @@ export function MyInfo() {
         </S.Form>
 
         <S.Form>
-          <S.Guide>이름(닉네임)</S.Guide>
+          <S.Guide>닉네임</S.Guide>
           <S.Input
             type="text"
             value={userName}
