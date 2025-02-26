@@ -25,12 +25,24 @@ export function Login() {
       });
   
       console.log("📌 로그인 API 응답:", response);
-      console.log("JWT Payload:", payload);
   
       if (response.status === 200) {
         if (response.data.token) {
+          const token = response.data.token;
+          localStorage.setItem("token", token);
+          
+          const base64Url = token.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(
+            atob(base64)
+              .split('')
+              .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+              .join('')
+          );
           const payload = JSON.parse(jsonPayload);
-          localStorage.setItem("userId", payload.id);
+          localStorage.setItem("userId", payload.sub);
+
+          console.log("userId:", playload.sub);
 
           alert("로그인 성공!");
           navigate("/main");
