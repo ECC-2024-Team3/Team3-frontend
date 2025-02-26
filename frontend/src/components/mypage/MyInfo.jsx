@@ -7,8 +7,10 @@ import { API_URLS } from "../../consts";
 
 export function MyInfo() {
 
-  const [userId, setUserId] = useState(userId);
-  const [userName, setUserName] = useState(userName);
+  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -32,7 +34,8 @@ export function MyInfo() {
         });
         if (response.status === 200 && response.data) {
           setUserId(response.userId || "");
-          setUserName(response.userName || "");
+          setEmail(response.data.email || "");
+          setNickname(response.data.nickname || "");
         }
       } catch (error) {
         console.error(error);
@@ -57,7 +60,8 @@ export function MyInfo() {
         const token = localStorage.getItem("token");
         const body = {
           userId,
-          userName,
+          email,
+          nickname,
           currentPassword,
           newPassword,
         };
@@ -89,11 +93,11 @@ export function MyInfo() {
 
       <S.Container>
         <S.Form>
-          <S.Guide>아이디</S.Guide>
+          <S.Guide>이메일</S.Guide>
           <S.Input
             type="text"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </S.Form>
 
@@ -101,8 +105,8 @@ export function MyInfo() {
           <S.Guide>닉네임</S.Guide>
           <S.Input
             type="text"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
           />
         </S.Form>
 
