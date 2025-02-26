@@ -107,7 +107,7 @@ export function Signup() {
           />
         </S.InputWrap>
         <S.ErrorMessageWrap>
-          {password !== !confirmPassword && confirmPassword.length > 0 && (
+          {password !== confirmPassword && confirmPassword.length > 0 && (
             <div>비밀번호가 일치하지 않습니다.</div>
           )}
         </S.ErrorMessageWrap>
