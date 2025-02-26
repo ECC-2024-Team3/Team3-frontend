@@ -57,7 +57,8 @@ export function Signup() {
   
       console.log("📌 회원가입 API 응답:", response);
   
-      if (response?.userId) {  // API 응답에 userId가 존재하는지 확인
+      if (response.status === 200 && response.data && response.data.userId) {  // API 응답에 userId가 존재하는지 확인
+        localStorage.setItem("userId", response.data.userId);
         alert("회원가입이 완료되었습니다!");
         navigate("/main");
       } else {
