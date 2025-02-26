@@ -12,37 +12,37 @@ export function Detail() {
   const [product, setProduct] = useState({});
 
   useEffect(() => {
-    async function fetchProduct() {
+    const fetchProduct = async () => {
       try {
-        const response = await fetchApi(API_URLS.posts, { method: "GET" });
-        console.log(response);
-
-        if (response && Array.isArray(response.content)) {
-          
-          const selectedItem = response.content.find(
-            (item) => String(item.postId) === postId
-          );
-
-          if (selectedItem) {
-            setProduct({
-              post_id: selectedItem.postId,
-              user_id: selectedItem.userId,
-              title: selectedItem.title,
-              location: selectedItem.location,
-              price: selectedItem.price,
-              content: selectedItem.content,
-              transaction_status: selectedItem.transactionStatus,
-              image: selectedItem.representativeImage,
-              category: selectedItem.category,
-              itemCondition: selectedItem.itemCondition
-            });
-          }
-        }  
+        const userId = localStorage.getItem("userId"); // ✅ 로그인한 사용자 ID 가져오기
+    
+        const response = await fetchApi(API_URLS.postById(postId, userId), { method: "GET" });
+    
+        console.log("📌 상세페이지 API 응답:", response); // 응답 로그 확인
+    
+        if (response?.status === 200 && response.data) {
+          setProduct({
+            post_id: response.data.postId,
+            user_id: response.data.userId,
+            title: response.data.title,
+            location: response.data.location,
+            price: response.data.price,
+            content: response.data.content,
+            transaction_status: response.data.transactionStatus,
+            image: response.data.representativeImage,
+            category: response.data.category,
+            itemCondition: response.data.itemCondition
+          });
+        } else {
+          console.error("🚨 상품 데이터를 불러올 수 없습니다:", response);
+          alert("상품 데이터를 불러올 수 없습니다.");
+        }
       } catch (err) {
+        console.error("🚨 상품 불러오기 실패:", err);
         alert("오류가 발생했습니다.");
-        console.error(err);
       }
-    }
+    };    
+    
 
     fetchProduct();
   }, [postId]);

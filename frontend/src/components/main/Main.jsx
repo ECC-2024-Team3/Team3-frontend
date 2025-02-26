@@ -17,11 +17,20 @@ export function Main() {
       const response = await fetchApi(API_URLS.posts, {
         method: "GET",
       });
-      setItems(response?.content || []);
+  
+      console.log("📌 게시글 API 응답:", response); // 응답 확인용 로그 추가
+  
+      if (response.status === 200 && response.data?.content) {
+        setItems(response.data.content); // ✅ 올바른 데이터 경로로 설정
+      } else {
+        console.error("🚨 게시글 데이터가 비어 있습니다:", response);
+        setItems([]);
+      }
     } catch (err) {
-      console.error(err);
+      console.error("🚨 게시글 불러오기 실패:", err);
     }
   };
+  
 
   useEffect(() => {
     fetchItems();
