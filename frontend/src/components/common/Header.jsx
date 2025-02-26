@@ -8,16 +8,11 @@ export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const storedLogin = localStorage.getItem("loggedIn");
+    const storedLogin = localStorage.getItem("token");
     if (storedLogin === "true") {
       setIsLoggedIn(true);
     }
   }, []);
-
-  const handleLogin = () => {
-    localStorage.setItem("loggedIn", "true");
-    setIsLoggedIn(true);
-  };
 
   return (
     <S.Header>
@@ -29,7 +24,7 @@ export default function Header() {
       <S.Nav>
         {!isLoggedIn && (
           <Link to="/">
-            <S.BuyButton onClick={handleLogin}>로그인</S.BuyButton>
+            <S.BuyButton>로그인</S.BuyButton>
           </Link>
         )}
         <Link to="/main">
