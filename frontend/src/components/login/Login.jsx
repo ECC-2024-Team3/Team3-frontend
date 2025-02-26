@@ -28,8 +28,10 @@ export function Login() {
   
       if (response.status === 200) {
         if (response.data.token) {
+          const userId = localStorage.getItem("userId");
+
           localStorage.setItem("token", response.data.token);
-          localStorage.setItem("userId", response.data.userId);
+          localStorage.setItem("userId", userId);
           alert("로그인 성공!");
           navigate("/main");
         } else {
