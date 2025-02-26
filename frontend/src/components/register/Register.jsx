@@ -5,6 +5,40 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URLS } from "../../consts";
 import { fetchApi } from "../../utils";
 
+// 🔹 카테고리 변환 함수
+const convertCategory = (category) => {
+  const mapping = {
+    "패션 & 액세서리": "FASHION_ACCESSORIES",
+    "뷰티 & 잡화": "BEAUTY_GOODS",
+    "생활 & 식품": "HOME_FOOD",
+    "기타": "OTHERS",
+  };
+  return mapping[category] || "OTHERS"; // 기본값 OTHERS
+};
+
+// 🔹 상품 상태 변환 함수
+const convertItemCondition = (condition) => {
+  const mapping = {
+    "새 상품": "NEW",
+    "사용감 적음": "LIGHTLY_USED",
+    "사용감 많음": "HEAVILY_USED",
+    "고장/파손 상품": "DAMAGED",
+  };
+  return mapping[condition] || "NEW"; // 기본값 NEW
+};
+
+// 🔹 거래 상태 변환 함수
+const convertTransactionStatus = (status) => {
+  const mapping = {
+    "판매 중": "ON_SALE",
+    "예약 중": "RESERVED",
+    "나눔": "FREE",
+    "거래 완료": "COMPLETED",
+  };
+  return mapping[status] || "ON_SALE"; // 기본값 ON_SALE
+};
+
+
 export function Register() {
   const navigate = useNavigate();
   const { postId } = useParams(); 
@@ -68,12 +102,12 @@ export function Register() {
   
     const postData = {
       title,
-      category,
-      itemCondition,
+      category: convertCategory(category), // ✅ 카테고리 변환
+      itemCondition: convertItemCondition(itemCondition), // ✅ 상품 상태 변환
       content,
       price: finalPrice,
       location,
-      transactionStatus: finalStatus,
+      transactionStatus: convertTransactionStatus(finalStatus), // ✅ 거래 상태 변환
       images: images.length > 0 ? images : [],  // ✅ 빈 배열 방지
     };
   
@@ -110,8 +144,6 @@ export function Register() {
     }
   };
   
-  
-
   const handleFreeItem = () => {
     setIsFree(!isFree);
 
