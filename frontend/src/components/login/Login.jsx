@@ -28,20 +28,8 @@ export function Login() {
   
       if (response.status === 200) {
         if (response.data.token) {
-          const token = response.data.token;
-          localStorage.setItem("token", token);
-          
-          const base64Url = token.split('.')[1];
-          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-          const jsonPayload = decodeURIComponent(
-            atob(base64)
-              .split('')
-              .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-              .join('')
-          );
-          const payload = JSON.parse(jsonPayload);
-          localStorage.setItem("userId", payload.sub);
-
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.userId);
           alert("로그인 성공!");
           navigate("/main");
         } else {
