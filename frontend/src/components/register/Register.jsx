@@ -5,6 +5,40 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { API_URLS } from "../../consts";
 import { fetchApi } from "../../utils";
 
+// 🔹 카테고리 변환 함수
+const convertCategory = (category) => {
+  const mapping = {
+    "패션 & 액세서리": "FASHION_ACCESSORIES",
+    "뷰티 & 잡화": "BEAUTY_GOODS",
+    "생활 & 식품": "HOME_FOOD",
+    "기타": "OTHERS",
+  };
+  return mapping[category] || "OTHERS"; // 기본값 OTHERS
+};
+
+// 🔹 상품 상태 변환 함수
+const convertItemCondition = (condition) => {
+  const mapping = {
+    "새 상품": "NEW",
+    "사용감 적음": "LIGHTLY_USED",
+    "사용감 많음": "HEAVILY_USED",
+    "고장/파손 상품": "DAMAGED",
+  };
+  return mapping[condition] || "NEW"; // 기본값 NEW
+};
+
+// 🔹 거래 상태 변환 함수
+const convertTransactionStatus = (status) => {
+  const mapping = {
+    "판매 중": "ON_SALE",
+    "예약 중": "RESERVED",
+    "나눔": "FREE",
+    "거래 완료": "COMPLETED",
+  };
+  return mapping[status] || "ON_SALE"; // 기본값 ON_SALE
+};
+
+
 export function Register() {
   const navigate = useNavigate();
   const { postId } = useParams(); 
@@ -62,49 +96,54 @@ export function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const finalPrice = isFree ? 0 : Number(price) || 0;
     const finalStatus = isFree ? "나눔" : transactionStatus || "판매 중";
-
+  
     const postData = {
-      images,
       title,
-      category,
-      itemCondition,
+      category: convertCategory(category), // ✅ 카테고리 변환
+      itemCondition: convertItemCondition(itemCondition), // ✅ 상품 상태 변환
       content,
       price: finalPrice,
       location,
-      transactionStatus: finalStatus,
+      transactionStatus: convertTransactionStatus(finalStatus), // ✅ 거래 상태 변환
+      images: images.length > 0 ? images : [],  // ✅ 빈 배열 방지
     };
-
+  
+    console.log("📌 서버로 보낼 데이터:", JSON.stringify(postData, null, 2));
+  
     try {
-      let response;
-      if (isEditMode) {
-        response = await fetchApi(`${API_URLS.posts}/${postId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postData),
-        });
-      } else {
-        response = await fetchApi(API_URLS.posts, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(postData),
-        });
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        return;
       }
-
+  
+      const response = await fetchApi(API_URLS.posts, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(postData),
+      });
+  
+      console.log("📌 게시글 등록 API 응답:", response);
+  
       if (response && (response.status === 200 || response.status === 201)) {
-        alert(isEditMode ? "게시글이 수정되었습니다." : "게시글이 등록되었습니다.");
+        alert("게시글이 등록되었습니다.");
         navigate("/main");
       } else {
+        console.error("🚨 오류 응답:", response);
         alert(response?.message || "요청 중 오류가 발생했습니다.");
       }
     } catch (error) {
-      console.error("요청 실패:", error);
-      alert("요청 실패");
+      console.error("🚨 요청 실패:", error);
+      alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
-
+  
   const handleFreeItem = () => {
     setIsFree(!isFree);
 
