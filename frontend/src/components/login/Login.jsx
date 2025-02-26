@@ -29,6 +29,7 @@ export function Login() {
       if (response.status === 200) {
         if (response.data.token) {
           localStorage.setItem("token", response.data.token);
+          localStorage.setItem("userId", response.data.userId);
           alert("로그인 성공!");
           navigate("/main");
         } else {
